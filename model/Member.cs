@@ -4,11 +4,9 @@ namespace RegistryApp.model
 {
     public class Member
     {
-        public int _id; // set in this class, automatic
-
         public string _name;
 
-        public string _personalNr;
+        public string _personalNumber;
 
         public uint _boatAmount;
 
@@ -16,20 +14,13 @@ namespace RegistryApp.model
 
         public Member(
             string name,
-            string personalNr, 
+            string personalNumber, 
             uint boatAmount
         )
         {
-            _id = 1; // TODO: increment based on stored ones
-            
             _name = name;
-            _personalNr = personalNr;
+            _personalNumber = personalNumber;
             _boatAmount = boatAmount;
-        }
-
-        public void AddBoat(Boat boat)
-        {
-            // TODO: implement this
         }
     }
 }

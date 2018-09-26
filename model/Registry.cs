@@ -12,13 +12,18 @@ namespace RegistryApp.model
 
         public void AddMember(
             string name,
-            string personalNr, 
+            string personalNumber, 
             uint boatAmount = 0
         )
         {
             _member = 
-                new Member(name, personalNr, boatAmount);
+                new Member(name, personalNumber, boatAmount);
             StoreMember();
+        }
+
+        public void AddBoat(Boat boat)
+        {
+            // TODO: implement this
         }
 
         private void StoreMember()

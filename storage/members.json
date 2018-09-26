@@ -1,0 +1,17 @@
+{
+    "1": {
+        "name": "Joe Johnson",
+        "personalNr": "19190926-9777",
+        "boatAmount": 2,
+        "boats": [
+            {
+                "type": "Sailboat",
+                "length": "25"
+            },
+            {
+                "type": "Other",
+                "length": "1"
+            }
+        ]
+    }
+}
