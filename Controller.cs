@@ -15,14 +15,19 @@ namespace RegistryApp
             _model = new Model();
             _view = new View();
 
+            RunApp();
+        }
+
+        public void RunApp()
+        {
             while (true) // while app is running
             {
-            ReadUserInput();
-                //int userInput = ReadUserInput();
-            int result = _model.Double(_userInput);
+                ReadUserInput();
 
-            string resultAsString = $"{result}";
-            _view.ConsoleResult(resultAsString);
+                int result = _model.Double(_userInput);
+
+                string resultAsString = $"{result}";
+                _view.ConsoleResult(resultAsString);
             }
         }
 
@@ -30,24 +35,16 @@ namespace RegistryApp
         {
             int userInput;
 
-            while (true) // while app is running
-            {
                try
                {
                     _view.GreetUser();
                     userInput = int.Parse(Console.ReadLine());
-                    _userInput = userInput;
-
-                    int result = _model.Double(_userInput);
-
-            string resultAsString = $"{result}";
-            _view.ConsoleResult(resultAsString);
+                    _userInput = userInput;                    
                 }
                 catch (Exception) // incorrect user input
                 {
                     _view.InstructUser("Please enter an integer.");
                 }
-           }
         }
     }
 }
