@@ -4,45 +4,55 @@ namespace RegistryApp
 {
     public class Controller
     {
-        private Model _model;
+        private Helper _helper;
 
         private View _view;
 
-        public void Initialize()
+        public Controller()
         {
-            _model = new Model();
+            _helper = new Helper();
             _view = new View();
-
-            RunApp();
         }
 
-        public void RunApp()
+        public void StartApp()
         {
             while (true) // while app is running
             {
-                _view.GreetUser();
-
                 try
                 {
-                    int userInput = GetUserInput();
-
-                    int result = _model.Double(userInput);
-
-                    string resultAsString = $"{result}";
-                    _view.ConsoleResult(resultAsString);
+                    RunApp();
                 }
                 catch (Exception)
                 {
-                    _view.InstructUser("Please enter an integer.");
+                    _view.InstructUser("Please enter two integers.");
                 }
             }
         }
 
-        private int GetUserInput() // should return, try null in catch
+        private void RunApp()
         {
-            int userInput = int.Parse(Console.ReadLine());
-            return userInput;                    
-            
+            _view.GreetUser();
+
+            string userInput = GetUserInput();
+            string[] arguments = 
+                _helper.SplitBy(userInput, " ");
+            int[] intArguments = 
+                _helper.GetIntsFromStrings(arguments);
+
+            int a = intArguments[0];
+            int b = intArguments[1];
+
+            int result = _helper.GetSum(a, b);
+            string resultAsString = 
+                _helper.GetStringFromInt(result);
+
+            _view.ConsoleResult(resultAsString);
+        }
+
+        private string GetUserInput()
+        {
+            string userInput = Console.ReadLine();
+            return userInput;
         }
     }
 }

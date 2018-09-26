@@ -8,11 +8,11 @@ namespace RegistryApp
         {
             string greeting = "Welcome! ";
             string instruction =
-                "Please enter a positive integer ";
+                "Please enter two integers ";
             string info = 
-                "and we will double it for you! ";
+                "and then get the sum of them! ";
 
-            string label = "Integer: ";
+            string label = "Integers: ";
 
             Console.WriteLine(
                 $"{greeting}{instruction}{info}"

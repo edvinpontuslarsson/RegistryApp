@@ -14,7 +14,7 @@ namespace RegistryApp
         static void Main(string[] args) // perhaps remove args param here
         {
             Controller controller = new Controller();
-            controller.Initialize();
+            controller.StartApp();
         }
     }
 }
