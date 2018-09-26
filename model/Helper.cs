@@ -1,6 +1,6 @@
 using System;
 
-namespace RegistryApp
+namespace RegistryApp.model
 {
     /// <summary>
     /// Contains general helper methods

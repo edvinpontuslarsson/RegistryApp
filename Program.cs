@@ -13,7 +13,8 @@ namespace RegistryApp
         /// <param name="args">User input</param>
         static void Main(string[] args) // perhaps remove args param here
         {
-            Controller controller = new Controller();
+            controller.Controller controller = 
+                new controller.Controller();
             controller.StartApp();
         }
     }

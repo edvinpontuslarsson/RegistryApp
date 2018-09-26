@@ -1,17 +1,17 @@
 using System;
 
-namespace RegistryApp
+namespace RegistryApp.controller
 {
     public class Controller
     {
-        private Helper _helper;
+        private model.Helper _helper;
 
-        private View _view;
+        private view.View _view;
 
         public Controller()
         {
-            _helper = new Helper();
-            _view = new View();
+            _helper = new model.Helper();
+            _view = new view.View();
         }
 
         public void StartApp()
@@ -29,7 +29,7 @@ namespace RegistryApp
             }
         }
 
-        private void RunApp()
+        private void RunApp() // split into smaller methods
         {
             _view.GreetUser();
 

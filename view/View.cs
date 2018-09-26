@@ -1,6 +1,6 @@
 using System;
 
-namespace RegistryApp
+namespace RegistryApp.view
 {
     public class View
     {
