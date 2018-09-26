@@ -1,7 +1,5 @@
 using System;
 using System.IO;
-using System.Collections;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace RegistryApp.model
@@ -25,7 +23,16 @@ namespace RegistryApp.model
 
         private void StoreMember()
         {
+            JsonSerializer jsonSerializer = new JsonSerializer();
+            jsonSerializer.NullValueHandling =
+                NullValueHandling.Ignore;
 
+            string projectDir = 
+                Directory.GetCurrentDirectory();
+            string storageDir = 
+                $"{projectDir}/storage/registry.json";
+
+            
         }
     }
 }
