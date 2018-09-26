@@ -27,14 +27,28 @@ namespace RegistryApp.model
 
         private void StoreMember()
         {
+            Member a = new Member("Donald Duck", "19070926-313", 0);
+            Member b = new Member("Batman", "19500926-5555", 0);
+
+            Member[] bothMembers = new Member[2];
+
+            bothMembers[0] = a;
+            bothMembers[1] = b;
+
+            Members members = new Members(bothMembers);
+
+            string json = JsonConvert.SerializeObject(members);
+
             string projectDir = 
                 Directory.GetCurrentDirectory();
             string storageDir = 
                 $"{projectDir}/storage/members.json";
 
-            
-
-            
+            using (System.IO.StreamWriter file =
+                new System.IO.StreamWriter(@storageDir, true))
+            {
+                file.Write(json);
+            }
         }
 /* 
         private Member GetMember()

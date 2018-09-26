@@ -12,6 +12,11 @@ namespace RegistryApp.controller
         {
             _helper = new model.Helper();
             _view = new view.View();
+
+            model.Registry registry = 
+                new model.Registry();
+
+            registry.AddMember("Donald Duck", "19070926-313", 0);
         }
 
         public void StartApp()
@@ -30,7 +35,7 @@ namespace RegistryApp.controller
         }
 
         private void RunApp() // split into smaller methods
-        {
+        {            
             _view.GreetUser();
 
             string userInput = GetUserInput();
