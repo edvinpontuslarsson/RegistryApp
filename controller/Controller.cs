@@ -36,6 +36,13 @@ namespace RegistryApp.controller
 
         private void RunApp() // split into smaller methods
         {            
+            /*
+            
+            WARNING! This runs on and on, be careful about what I do here,
+            I can test in constructor
+            
+             */
+
             _view.GreetUser();
 
             string userInput = GetUserInput();

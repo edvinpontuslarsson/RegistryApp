@@ -16,8 +16,10 @@ namespace RegistryApp.model
             uint boatAmount = 0
         )
         {
-            // first get all members, then add new one
-            StoreMember();
+            string json = StoreMember(); // make void later
+
+            Members members = GetMembers(json);
+            Console.WriteLine(members._members[0]._name);
         }
 
         public void AddBoat(Boat boat)
@@ -25,7 +27,7 @@ namespace RegistryApp.model
             // TODO: implement this
         }
 
-        private void StoreMember()
+        private string StoreMember() // just return string now to test, read file later
         {
             Member a = new Member("Donald Duck", "19070926-313", 0);
             Member b = new Member("Batman", "19500926-5555", 0);
@@ -49,11 +51,18 @@ namespace RegistryApp.model
             {
                 file.Write(json);
             }
-        }
-/* 
-        private Member GetMember()
-        {
 
-        }*/
+            return json;
+        }
+
+        private Members GetMembers(string json)
+        {
+            Member[] emptyNow = new Member[0];
+            Members members = new Members(emptyNow);
+
+            JsonConvert.PopulateObject(json, members);
+
+            return members;
+        }
     }
 }
