@@ -1,5 +1,5 @@
-{
-    "1": {
+[
+    {
         "name": "Joe Johnson",
         "personalNr": "19190926-9777",
         "boatAmount": 2,
@@ -13,5 +13,20 @@
                 "length": "1"
             }
         ]
+    },
+    {
+        "name": "Janet Jackson",
+        "personalNr": "19660516-2244",
+        "boatAmount": 2,
+        "boats": [
+            {
+                "type": "Sailboat",
+                "length": "25"
+            },
+            {
+                "type": "Other",
+                "length": "1"
+            }
+        ]
     }
-}
+]

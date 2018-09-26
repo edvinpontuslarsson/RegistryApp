@@ -6,7 +6,7 @@ namespace RegistryApp.model
 {
     public class Registry
     {
-        private Member _member;
+        private Members _members;
 
         private Boat[] _boats;
 
@@ -16,8 +16,7 @@ namespace RegistryApp.model
             uint boatAmount = 0
         )
         {
-            _member = 
-                new Member(name, personalNumber, boatAmount);
+            // first get all members, then add new one
             StoreMember();
         }
 
@@ -28,16 +27,19 @@ namespace RegistryApp.model
 
         private void StoreMember()
         {
-            JsonSerializer jsonSerializer = new JsonSerializer();
-            jsonSerializer.NullValueHandling =
-                NullValueHandling.Ignore;
-
             string projectDir = 
                 Directory.GetCurrentDirectory();
             string storageDir = 
-                $"{projectDir}/storage/registry.json";
+                $"{projectDir}/storage/members.json";
+
+            
 
             
         }
+/* 
+        private Member GetMember()
+        {
+
+        }*/
     }
 }
