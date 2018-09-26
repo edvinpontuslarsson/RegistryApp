@@ -4,8 +4,6 @@ namespace RegistryApp
 {
     public class Controller
     {
-        private int _userInput;
-        
         private Model _model;
 
         private View _view;
@@ -22,29 +20,29 @@ namespace RegistryApp
         {
             while (true) // while app is running
             {
-                ReadUserInput();
+                _view.GreetUser();
 
-                int result = _model.Double(_userInput);
+                try
+                {
+                    int userInput = GetUserInput();
 
-                string resultAsString = $"{result}";
-                _view.ConsoleResult(resultAsString);
-            }
-        }
+                    int result = _model.Double(userInput);
 
-        private void ReadUserInput() // perhaps split
-        {
-            int userInput;
-
-               try
-               {
-                    _view.GreetUser();
-                    userInput = int.Parse(Console.ReadLine());
-                    _userInput = userInput;                    
+                    string resultAsString = $"{result}";
+                    _view.ConsoleResult(resultAsString);
                 }
-                catch (Exception) // incorrect user input
+                catch (Exception)
                 {
                     _view.InstructUser("Please enter an integer.");
                 }
+            }
+        }
+
+        private int GetUserInput() // should return, try null in catch
+        {
+            int userInput = int.Parse(Console.ReadLine());
+            return userInput;                    
+            
         }
     }
 }
