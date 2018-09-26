@@ -2,11 +2,19 @@
 
 namespace RegistryApp
 {
+    /// <summary>
+    /// Starting point of the application
+    /// </summary>
     class Program
     {
-        static void Main(string[] args)
+        /// <summary>
+        /// Runs the application
+        /// </summary>
+        /// <param name="args">User input</param>
+        static void Main(string[] args) // perhaps remove args param here
         {
-            Console.WriteLine("Hello World!");
+            Controller controller = new Controller();
+            controller.Initialize();
         }
     }
 }
