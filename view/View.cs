@@ -6,22 +6,28 @@ namespace RegistryApp.view
     {
         public void GreetUser() 
         {
-            string greeting = "Welcome! ";
-            string instruction =
-                "Please enter two integers ";
-            string info = 
-                "and then get the sum of them! ";
-
-            string label = "Integers: ";
-
-            Console.WriteLine(
-                $"{greeting}{instruction}{info}"
-            );
-
-            Console.Write(label);
+            Console.WriteLine("Welcome!");
         }
 
-        public void InstructUser(string instruction)
+        public void InstructUser(bool error = false) 
+        {
+            string instruction = "";
+
+            if (error) {
+                instruction += "Unknown command \n";
+            }
+
+            instruction += "To list commands enter: \n  list commands";
+
+            Console.WriteLine(instruction);
+        }
+
+        public void AskForUserInput()
+        {
+            Console.Write(" How can I be of service?:");
+        }
+
+        public void RectifyUser(string instruction)
         {
             Console.BackgroundColor = ConsoleColor.Red;
             Console.ForegroundColor = ConsoleColor.White;

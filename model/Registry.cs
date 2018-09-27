@@ -57,7 +57,7 @@ namespace RegistryApp.model
 
         private Members GetMembers(string json)
         {
-            Member[] emptyNow = new Member[0];
+            Member[] emptyNow = new Member[0]; // hmm, maybe rethink member classes
             Members members = new Members(emptyNow);
 
             JsonConvert.PopulateObject(json, members);

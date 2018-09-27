@@ -10,12 +10,12 @@ namespace RegistryApp
         /// <summary>
         /// Runs the application
         /// </summary>
-        /// <param name="args">User input</param>
-        static void Main(string[] args) // perhaps remove args param here
+        static void Main() // perhaps remove args param here
         {
             controller.Controller controller = 
                 new controller.Controller();
-            controller.StartApp();
+            
+            controller.RunApp();
         }
     }
 }

@@ -19,33 +19,31 @@ namespace RegistryApp.controller
             registry.AddMember("Donald Duck", "19070926-313", 0);
         }
 
-        public void StartApp()
+        public void RunApp()
         {
+            _view.GreetUser();
+
             while (true) // while app is running
             {
+                bool error = false;
+                
                 try
-                {
-                    RunApp();
+                {                    
+                    _view.InstructUser(error);
+                    _view.AskForUserInput();
+
+                    string userInput = GetUserInput();
+                    ProcessUserInput(userInput);
                 }
                 catch (Exception)
                 {
-                    _view.InstructUser("Please enter two integers.");
+                    error = true;
                 }
             }
         }
 
-        private void RunApp() // split into smaller methods
-        {            
-            /*
-            
-            WARNING! This runs on and on, be careful about what I do here,
-            I can test in constructor
-            
-             */
-
-            _view.GreetUser();
-
-            string userInput = GetUserInput();
+        private void ProcessUserInput(string userInput)
+        {                        
             string[] arguments = 
                 _helper.SplitBy(userInput, " ");
             int[] intArguments = 
