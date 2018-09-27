@@ -19,7 +19,7 @@ namespace RegistryApp.model
             string json = StoreMember(); // make void later
 
             Members members = GetMembers(json);
-            Console.WriteLine(members._members[0]._name);
+            // Console.WriteLine(members._members[0]._name);
         }
 
         public void AddBoat(Boat boat)
@@ -27,8 +27,33 @@ namespace RegistryApp.model
             // TODO: implement this
         }
 
-        private string StoreMember() // just return string now to test, read file later
+        private string StoreMember()
         {
+            string projectDir = 
+                Directory.GetCurrentDirectory();
+            string storageDir = 
+                $"{projectDir}/storage/members.json";
+
+            // try first getting what json is, should be an array
+
+            // Maybe then I don't need a Members, Members is the starting JSON
+
+            /*
+            
+            Read file, populate Members with JSON array            
+            
+             */
+
+            // https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/file-system/how-to-read-from-a-text-file
+            
+            string file = File.ReadAllText(storageDir);
+
+            Members members = new Members();
+            
+
+            JsonConvert.PopulateObject(file, members);
+            
+            /* 
             Member a = new Member("Donald Duck", "19070926-313", 0);
             Member b = new Member("Batman", "19500926-5555", 0);
 
@@ -36,20 +61,17 @@ namespace RegistryApp.model
 
             bothMembers[0] = a;
             bothMembers[1] = b;
-
-            Members members = new Members(bothMembers);
+            */
+            
 
             string json = JsonConvert.SerializeObject(members);
 
-            string projectDir = 
-                Directory.GetCurrentDirectory();
-            string storageDir = 
-                $"{projectDir}/storage/members.json";
+            
 
-            using (System.IO.StreamWriter file =
+            using (System.IO.StreamWriter writer =
                 new System.IO.StreamWriter(@storageDir, true))
             {
-                file.Write(json);
+                writer.Write(json);
             }
 
             return json;
@@ -58,7 +80,7 @@ namespace RegistryApp.model
         private Members GetMembers(string json)
         {
             Member[] emptyNow = new Member[0]; // hmm, maybe rethink member classes
-            Members members = new Members(emptyNow);
+            Members members = new Members();
 
             JsonConvert.PopulateObject(json, members);
 

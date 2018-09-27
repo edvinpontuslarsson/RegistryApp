@@ -8,9 +8,9 @@ namespace RegistryApp
     class Program
     {
         /// <summary>
-        /// Runs the application
+        /// Starts the application
         /// </summary>
-        static void Main() // perhaps remove args param here
+        static void Main()
         {
             controller.Controller controller = 
                 new controller.Controller();

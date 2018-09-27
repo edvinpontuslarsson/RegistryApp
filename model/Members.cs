@@ -6,10 +6,11 @@ namespace RegistryApp.model
     {
         public Member[] _members;
 
-        // perhaps no constructors in these
+        // perhaps no constructor in this
+/*
         public Members(Member[] members)
         {
             _members = members;
-        }
+        } */
     }
 }

@@ -6,17 +6,18 @@ namespace RegistryApp.controller
     {
         private model.Helper _helper;
 
+        private model.Registry _registry;
+
         private view.View _view;
 
         public Controller()
         {
             _helper = new model.Helper();
             _view = new view.View();
+            _registry = new model.Registry();
 
-            model.Registry registry = 
-                new model.Registry();
-
-            registry.AddMember("Donald Duck", "19070926-313", 0);
+            
+            _registry.AddMember("Donald Duck", "19070926-313", 0);
         }
 
         public void RunApp()
@@ -25,44 +26,35 @@ namespace RegistryApp.controller
 
             while (true) // while app is running
             {
-                bool error = false;
-                
                 try
                 {                    
-                    _view.InstructUser(error);
+                    _view.InstructUser();
                     _view.AskForUserInput();
 
                     string userInput = GetUserInput();
                     ProcessUserInput(userInput);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    error = true;
+                    // _view.ConsoleException(e);
                 }
             }
-        }
-
-        private void ProcessUserInput(string userInput)
-        {                        
-            string[] arguments = 
-                _helper.SplitBy(userInput, " ");
-            int[] intArguments = 
-                _helper.GetIntsFromStrings(arguments);
-
-            int a = intArguments[0];
-            int b = intArguments[1];
-
-            int result = _helper.GetSum(a, b);
-            string resultAsString = 
-                _helper.GetStringFromInt(result);
-
-            _view.ConsoleResult(resultAsString);
         }
 
         private string GetUserInput()
         {
             string userInput = Console.ReadLine();
             return userInput;
+        }
+
+        private void ProcessUserInput(string userInput)
+        {                        
+            string[] arguments = 
+                _helper.SplitBy(userInput, " ");
+
+            // OK, enter name and personalNumber
+            
+            
         }
     }
 }
