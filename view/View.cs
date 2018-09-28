@@ -36,24 +36,24 @@ namespace RegistryApp.view
 
             Console.WriteLine(
                 "To add member, enter:\n" +
-                "  add member [string name] [string personalNumber]"
+                "  add member [string name] [string personalNumber]\n"
             );
 
             Console.WriteLine(
                 "To add boat to a member, enter:\n" +
-                "  add boat [string boatType] [int length] to member [int memberIndex]"
+                "  add boat [string boatType] [int length] to member [int memberIndex]\n"
             );
 
             Console.WriteLine(
                 "To edit name of a member, enter:\n" +
                 "  edit member [int memberIndex]" + 
-                "name to [string name]"
+                "name to [string name]\n"
             );
 
             Console.WriteLine(
                 "To edit boat type of a member, enter:\n" +
                 "  edit member [int memberIndex]" + 
-                "boat type of [int boatIndex] to [string boatType]"
+                "boat type of [int boatIndex] to [string boatType]\n"
             );
         }
 

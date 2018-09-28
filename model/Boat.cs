@@ -4,14 +4,8 @@ namespace RegistryApp.model
 {
     public class Boat
     {
-        public string _type; 
+        public string Type { get; set; }
 
-        public int _length;
-
-        public Boat(string type, int length)
-        {
-            _type = type; // if userInput !== lowercase one of listed types, set to Other
-            _length = length;
-        }
+        public int Length { get; set; }
     }
 }

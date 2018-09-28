@@ -17,7 +17,7 @@ namespace RegistryApp.controller
             _registry = new model.Registry();
 
             
-            _registry.AddMember("Donald Duck", "19070926-313", 0);
+            _registry.AddMember("Donald Duck", "19070926-313");
         }
 
         public void RunApp()

@@ -1,26 +1,27 @@
 using System;
+using System.Collections.Generic;
 
 namespace RegistryApp.model
 {
     public class Member
     {
-        public string _name;
+        public string Name { get; set; }
 
-        public string _personalNumber;
+        public string PersonalNumber { get; set; }
 
-        public uint _boatAmount;
+        public int BoatAmount { get; set; }
 
-        public Boat[] _boats;
+        public List<Boat> Boats { get; set; }
 
-        public Member(
-            string name,
-            string personalNumber, 
-            uint boatAmount
-        )
+        public Member()
         {
-            _name = name;
-            _personalNumber = personalNumber;
-            _boatAmount = boatAmount;
+            Boats = new List<Boat>();
+        }
+
+        public void AddBoat(Boat boat)
+        {
+            Boats.Add(boat);
+            BoatAmount += 1;
         }
     }
 }
