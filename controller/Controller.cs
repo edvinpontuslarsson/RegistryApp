@@ -17,7 +17,7 @@ namespace RegistryApp.controller
             _registry = new model.Registry();
 
             
-            _registry.AddMember("Edvin Larsson", "19910718-xxxx");
+            _registry.AddMember("Donald Duck", "19100718-313");
         }
 
         public void RunApp() // Maybe have this method with while & try catch in program

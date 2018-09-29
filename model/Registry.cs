@@ -15,28 +15,22 @@ namespace RegistryApp.model
             member.Name = name;
             member.PersonalNumber = personalNumber;
 
-            // new MemberList class here
-            MemberList memberList = new MemberList();
-            memberList.AddMember(member);
-
-            PutXmlFile(memberList);
-            /* 
-            List<Member> members;
+            MemberList memberList;
 
             bool registryExists = File.Exists(GetStorageDirectory());
 
             if (registryExists)
             {
-                members = GetMembers();
+                memberList = GetExistingMemberList();
             } 
             else
             {
-                members = new List<Member>();
+                memberList = new MemberList();
             }
 
-            members.Add(member);
+            memberList.AddMember(member);
 
-            PutXmlFile(members); */
+            PutXmlFile(memberList);
         }
 
         /// <summary>
@@ -60,12 +54,22 @@ namespace RegistryApp.model
         {
             // TODO: implement this
         }
-/*
-        public List<Member> GetMembers()
+
+        /// <summary>
+        /// Inspired by a method described here:
+        /// https://www.codeproject.com/Articles/487571/XML-Serialization-and-Deserialization-Part-2
+        /// </summary>
+        public MemberList GetExistingMemberList()
         {
-            return "TODO: Implement this";
+            XmlSerializer xmlDeserializer = new XmlSerializer(typeof(MemberList));
+            TextReader reader = new StreamReader(GetStorageDirectory());
+
+            object deserializer = xmlDeserializer.Deserialize(reader);
+            MemberList memberList = (MemberList)deserializer;
+
+            return memberList;
         }
-  */
+  
         private string GetStorageDirectory()
         {
             string projectDir = Directory.GetCurrentDirectory();
