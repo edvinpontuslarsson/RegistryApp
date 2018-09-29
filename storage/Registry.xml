@@ -45,5 +45,18 @@
         </Boat>
       </Boats>
     </Member>
+    <Member>
+      <ID>4</ID>
+      <Name>Marge Simpson</Name>
+      <PersonalNumber>19550505-1111</PersonalNumber>
+      <BoatAmount>1</BoatAmount>
+      <Boats>
+        <Boat>
+          <ID>1</ID>
+          <Type>motorsailer</Type>
+          <Length>80 feet</Length>
+        </Boat>
+      </Boats>
+    </Member>
   </Members>
 </MemberList>

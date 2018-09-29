@@ -7,41 +7,43 @@ namespace RegistryApp.model
 {
     public class RegistryModel
     {
-        private Boat[] Boats;
+        private MemberList MemberList;
+
+        private Member Member;
+
+        private Boat Boat;
 
         public void AddMember(string name, string personalNumber)
         {
-            Member member = new Member();
-            member.Name = name;
-            member.PersonalNumber = personalNumber;
-
-            MemberList memberList;
+            Member = new Member();
+            Member.Name = name;
+            Member.PersonalNumber = personalNumber;
 
             bool registryExists = File.Exists(GetStorageDirectory());
 
             if (registryExists)
             {
-                memberList = GetExistingMemberList();
+                MemberList = GetExistingMemberList();
 
-                int memberAmount = memberList.Members.Count;
-                member.ID = memberAmount + 1;
+                int memberAmount = MemberList.Members.Count;
+                Member.ID = memberAmount + 1;
             } 
             else
             {
-                memberList = new MemberList();
-                member.ID = 1;
+                MemberList = new MemberList();
+                Member.ID = 1;
             }
 
-            memberList.AddMember(member);
+            MemberList.AddMember(Member);
 
-            PutXmlFile(memberList);
+            UpdateXmlFile();
         }
 
         /// <summary>
         /// Inspired by a method described here:
         /// https://www.codeproject.com/Articles/483055/XML-Serialization-and-Deserialization-Part
         /// </summary>
-        private void PutXmlFile(MemberList members)
+        private void UpdateXmlFile()
         {
             string storageDirectory = GetStorageDirectory();
 
@@ -50,41 +52,41 @@ namespace RegistryApp.model
 
             using (TextWriter writer = new StreamWriter(storageDirectory))
             {
-                serializer.Serialize(writer, members);
+                serializer.Serialize(writer, MemberList);
             }
         }
 
         public void AddBoat(int memberID, string type, string length)
         {
-            MemberList memberList = GetExistingMemberList();
+            MemberList = GetExistingMemberList();
             
-            if (memberID > memberList.Members.Count + 1) {
+            if (memberID > MemberList.Members.Count + 1) {
                 throw new ArgumentException();
             }
 
-            Boat boat = new Boat();
-            boat.ID = 
-                memberList.Members[memberID]
+            Boat = new Boat();
+            Boat.ID = 
+                MemberList.Members[memberID]
                 .BoatAmount + 1;
-            boat.Type = type;
-            boat.Length =length;
-            memberList.Members[memberID].AddBoat(boat);
+            Boat.Type = type;
+            Boat.Length =length;
+            MemberList.Members[memberID].AddBoat(Boat);
 
-            PutXmlFile(memberList);
+            UpdateXmlFile();
         }
 
-        public Member GetMember(MemberList memberList, int memberID)
+        public Member GetMember(int memberID)
         {
             bool registryExists = File.Exists(GetStorageDirectory());
             if (!registryExists) {
                 throw new ArgumentException();
             }
 
-            if (memberID > memberList.Members.Count + 1) {
+            if (memberID > MemberList.Members.Count + 1) {
                 throw new ArgumentException();
             }
 
-            return memberList.Members[memberID - 1];
+            return MemberList.Members[memberID - 1];
         }
 
         /// <summary>

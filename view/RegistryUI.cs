@@ -38,6 +38,7 @@ namespace RegistryApp.view
             string length = Console.ReadLine();
 
             RegistryModel.AddBoat(memberID, type, length);
+            Console.WriteLine("Boat added succesfully!");
         }
     }
 }

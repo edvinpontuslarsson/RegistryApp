@@ -4,9 +4,9 @@ namespace RegistryApp.view
 {
     public class IndexUI
     {
-        private UserCommands UserCommands { get; set; }
+        private UserCommands UserCommands;
 
-        private RegistryUI RegistryUI { get; set; }
+        private RegistryUI RegistryUI;
 
         public IndexUI()
         {
