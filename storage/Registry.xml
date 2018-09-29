@@ -15,5 +15,12 @@
       <BoatAmount>0</BoatAmount>
       <Boats />
     </Member>
+    <Member>
+      <ID>3</ID>
+      <Name>Batman</Name>
+      <PersonalNumber>19500718-9999</PersonalNumber>
+      <BoatAmount>0</BoatAmount>
+      <Boats />
+    </Member>
   </Members>
 </MemberList>

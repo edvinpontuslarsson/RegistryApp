@@ -4,30 +4,30 @@ namespace RegistryApp.view
 {
     public class IndexUI
     {
-        private model.RegistryModel RegistryModel { get; set; }
+        private RegistryUI RegistryUI { get; set; }
 
         public IndexUI()
         {
-            RegistryModel = new model.RegistryModel();
+            RegistryUI = new RegistryUI();
         }
 
         public void GreetUser() 
         {
             Console.WriteLine("Welcome!");
+            InstructUser();
         }
 
         public void Interact()
         {
-            InstructUser();
             AskForUserInput();
 
-            string userInput = GetUserInput();
-            ProcessUserInput(userInput);
+            string[] userArguments = GetUserArguments();
+            ProcessUserInput(userArguments);
         }
 
         public void HandleException(Exception exception)
         {
-
+            
         }
 
         private void InstructUser(bool error = false) 
@@ -38,24 +38,35 @@ namespace RegistryApp.view
                 instruction += "Unknown command \n";
             }
 
-            instruction += "\nTo list commands, enter:\n  list commands\n";
+            instruction += "\nTo list commands, enter:\n  list commands";
 
             Console.WriteLine(instruction);
         }
 
         private void AskForUserInput()
         {
-            Console.Write("  How can I be of service?: ");
+            Console.Write("\n  How can I be of service?: ");
         }
 
-        private string GetUserInput()
+        private string[] GetUserArguments()
         {
             string userInput = Console.ReadLine();
-            return userInput;
+            string lowUserInput = userInput.ToLower();
+
+            string[] userArguments =
+                lowUserInput.Split(" ");
+            
+            return userArguments;
         }
 
-        private void ProcessUserInput(string userInput)
-        {}
+        private void ProcessUserInput(string[] userArguments)
+        {
+            if (userArguments[0] == "add" &&
+                userArguments[1] == "member")
+            {
+                RegistryUI.AddMember();
+            }
+        }
 
         // TODO: have array with commands in separate view class
         // here just loop and Console.WriteLine every item
