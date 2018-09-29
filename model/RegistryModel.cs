@@ -5,9 +5,9 @@ using System.Xml.Serialization;
 
 namespace RegistryApp.model
 {
-    public class Registry
+    public class RegistryModel
     {
-        private Boat[] _boats;
+        private Boat[] Boats;
 
         public void AddMember(string name, string personalNumber)
         {

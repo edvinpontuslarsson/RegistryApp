@@ -2,14 +2,35 @@ using System;
 
 namespace RegistryApp.view
 {
-    public class View
+    public class IndexUI
     {
+        private model.RegistryModel RegistryModel { get; set; }
+
+        public IndexUI()
+        {
+            RegistryModel = new model.RegistryModel();
+        }
+
         public void GreetUser() 
         {
             Console.WriteLine("Welcome!");
         }
 
-        public void InstructUser(bool error = false) 
+        public void Interact()
+        {
+            InstructUser();
+            AskForUserInput();
+
+            string userInput = GetUserInput();
+            ProcessUserInput(userInput);
+        }
+
+        public void HandleException(Exception exception)
+        {
+
+        }
+
+        private void InstructUser(bool error = false) 
         {
             string instruction = "";
 
@@ -22,14 +43,23 @@ namespace RegistryApp.view
             Console.WriteLine(instruction);
         }
 
-        public void AskForUserInput()
+        private void AskForUserInput()
         {
             Console.Write("  How can I be of service?: ");
         }
 
+        private string GetUserInput()
+        {
+            string userInput = Console.ReadLine();
+            return userInput;
+        }
+
+        private void ProcessUserInput(string userInput)
+        {}
+
         // TODO: have array with commands in separate view class
         // here just loop and Console.WriteLine every item
-        public void ListCommands()
+        private void ListCommands()
         {
             Console.WriteLine(
                 "To list commands, enter:\n" +
@@ -59,17 +89,12 @@ namespace RegistryApp.view
             );
         }
 
-        public void RectifyUser(string instruction)
+        private void RectifyUser(string instruction)
         {
             Console.BackgroundColor = ConsoleColor.Red;
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(instruction);
             Console.ResetColor();
-        }
-
-        public void ConsoleResult(string result) 
-        {
-            Console.WriteLine(result);
         }
     }
 }

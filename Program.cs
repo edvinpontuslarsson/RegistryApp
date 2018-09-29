@@ -7,15 +7,32 @@ namespace RegistryApp
     /// </summary>
     class Program
     {
+        private static view.IndexUI IndexUI { get; set; }
+
         /// <summary>
         /// Starts the application
         /// </summary>
         static void Main()
-        {
-            controller.Controller controller = 
-                new controller.Controller();
-            
-            controller.RunApp();
+        {            
+            IndexUI = new view.IndexUI();
+            RunApp();
+        }
+
+        private static void RunApp()
+        {               
+            IndexUI.GreetUser();
+
+            while (true) // while app is running
+            {
+                try
+                {
+                    IndexUI.Interact();
+                }
+                catch (Exception exception)
+                {
+                    IndexUI.HandleException(exception);
+                }
+            }
         }
     }
 }
