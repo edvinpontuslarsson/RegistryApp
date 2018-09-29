@@ -32,13 +32,11 @@ namespace RegistryApp.view
 
         private void InstructUser(bool error = false) 
         {
-            string instruction = "";
-
             if (error) {
-                instruction += "Unknown command \n";
+                RectifyUser("\nUnknown command");
             }
 
-            instruction += "\nTo list commands, enter:\n  list commands";
+            string instruction = "\nTo list commands, enter:\n  list commands";
 
             Console.WriteLine(instruction);
         }
@@ -61,11 +59,43 @@ namespace RegistryApp.view
 
         private void ProcessUserInput(string[] userArguments)
         {
-            if (userArguments[0] == "add" &&
+            if (userArguments[0] == "list" &&
+                userArguments[1] == "commands") 
+            {
+                ListCommands();
+            }
+            else if (userArguments[0] == "add" &&
                 userArguments[1] == "member")
             {
                 RegistryUI.AddMember();
             }
+            else if (userArguments[0] == "add" &&
+                userArguments[1] == "boat" &&
+                userArguments[4] != null)
+            {
+                int memberID = 
+                    GetParsedIntOrException(userArguments[4])
+                    - 1;
+                    
+                RegistryUI.AddBoat(memberID);
+            }
+            else
+            {
+                InstructUser(true);
+            }
+        }
+
+        private int GetParsedIntOrException(string input)
+        {
+            int integer;
+
+            bool canBeInt =
+                Int32.TryParse(input, out integer);
+            if (!canBeInt)
+            {
+                throw new ArgumentException();
+            }
+            return integer;
         }
 
         // TODO: have array with commands in separate view class
@@ -79,25 +109,24 @@ namespace RegistryApp.view
 
             Console.WriteLine(
                 "To add member, enter:\n" +
-                "  add member [string name] [string personalNumber]\n"
+                "  add member\n"
             );
-
+             
             Console.WriteLine(
                 "To add boat to a member, enter:\n" +
-                "  add boat [string boatType] [int length] to member [int memberIndex]\n"
+                "  add boat to member [int memberID]\n"
+            );
+            /*
+            Console.WriteLine(
+                "To edit a member, enter:\n" +
+                "  edit member [int memberID]\n"
             );
 
             Console.WriteLine(
-                "To edit name of a member, enter:\n" +
-                "  edit member [int memberIndex]" + 
-                "name to [string name]\n"
-            );
-
-            Console.WriteLine(
-                "To edit boat type of a member, enter:\n" +
-                "  edit member [int memberIndex]" + 
-                "boat type of [int boatIndex] to [string boatType]\n"
-            );
+                "To edit boat of a member, enter:\n" +
+                "  edit boat [int boatID] of " + 
+                "member [int memberID]\n"
+            );*/
         }
 
         private void RectifyUser(string instruction)

@@ -54,9 +54,37 @@ namespace RegistryApp.model
             }
         }
 
-        public void AddBoat(Boat boat)
+        public void AddBoat(int memberID, string type, string length)
         {
-            // TODO: implement this
+            MemberList memberList = GetExistingMemberList();
+            
+            if (memberID > memberList.Members.Count + 1) {
+                throw new ArgumentException();
+            }
+
+            Boat boat = new Boat();
+            boat.ID = 
+                memberList.Members[memberID]
+                .BoatAmount + 1;
+            boat.Type = type;
+            boat.Length =length;
+            memberList.Members[memberID].AddBoat(boat);
+
+            PutXmlFile(memberList);
+        }
+
+        public Member GetMember(MemberList memberList, int memberID)
+        {
+            bool registryExists = File.Exists(GetStorageDirectory());
+            if (!registryExists) {
+                throw new ArgumentException();
+            }
+
+            if (memberID > memberList.Members.Count + 1) {
+                throw new ArgumentException();
+            }
+
+            return memberList.Members[memberID - 1];
         }
 
         /// <summary>
@@ -65,6 +93,11 @@ namespace RegistryApp.model
         /// </summary>
         public MemberList GetExistingMemberList()
         {
+            bool registryExists = File.Exists(GetStorageDirectory());
+            if (!registryExists) {
+                throw new ArgumentException();
+            }
+
             XmlSerializer xmlDeserializer = new XmlSerializer(typeof(MemberList));
             TextReader reader = new StreamReader(GetStorageDirectory());
 

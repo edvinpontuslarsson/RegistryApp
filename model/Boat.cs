@@ -4,8 +4,10 @@ namespace RegistryApp.model
 {
     public class Boat
     {
+        public int ID { get; set; }
+
         public string Type { get; set; }
 
-        public int Length { get; set; }
+        public string Length { get; set; }
     }
 }

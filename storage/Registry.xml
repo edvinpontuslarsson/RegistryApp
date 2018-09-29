@@ -12,8 +12,19 @@
       <ID>2</ID>
       <Name>Donald Duck</Name>
       <PersonalNumber>19100718-313</PersonalNumber>
-      <BoatAmount>0</BoatAmount>
-      <Boats />
+      <BoatAmount>2</BoatAmount>
+      <Boats>
+        <Boat>
+          <ID>1</ID>
+          <Type>Other</Type>
+          <Length>12 meter</Length>
+        </Boat>
+        <Boat>
+          <ID>2</ID>
+          <Type>Other</Type>
+          <Length>25 meter</Length>
+        </Boat>
+      </Boats>
     </Member>
     <Member>
       <ID>3</ID>

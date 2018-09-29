@@ -22,6 +22,7 @@ namespace RegistryApp.model
 
         public void AddBoat(Boat boat)
         {
+            boat.ID = BoatAmount + 1;
             Boats.Add(boat);
             BoatAmount += 1;
         }

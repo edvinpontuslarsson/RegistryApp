@@ -20,6 +20,24 @@ namespace RegistryApp.view
             string personalNumber = Console.ReadLine();
 
             RegistryModel.AddMember(name, personalNumber);
+            Console.WriteLine("\n Member added succesfully!");
+        }
+
+        public void AddBoat(int memberID)
+        {
+            Console.Write("  Type: ");
+            string type = Console.ReadLine();
+
+            if (type != "Sailboat" || type != "Motorsailer" ||
+                type != "kayak" || type != "Canoe")
+            {
+                type = "Other";
+            }
+
+            Console.Write("  Length: ");
+            string length = Console.ReadLine();
+
+            RegistryModel.AddBoat(memberID, type, length);
         }
     }
 }
