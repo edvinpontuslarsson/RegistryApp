@@ -26,12 +26,13 @@ namespace RegistryApp.view
         public void AddBoat(int memberID)
         {
             Console.Write("  Type: ");
-            string type = Console.ReadLine();
-
-            if (type != "Sailboat" || type != "Motorsailer" ||
-                type != "kayak" || type != "Canoe")
+            string type = Console.ReadLine().ToLower();
+            
+            // logical error
+            if (type != "sailboat" && type != "motorsailer" &&
+                type != "kayak" && type != "canoe")
             {
-                type = "Other";
+                type = "other";
             }
 
             Console.Write("  Length: ");

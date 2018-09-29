@@ -5,8 +5,14 @@
       <ID>1</ID>
       <Name>Donald Duck</Name>
       <PersonalNumber>19100718-313</PersonalNumber>
-      <BoatAmount>0</BoatAmount>
-      <Boats />
+      <BoatAmount>1</BoatAmount>
+      <Boats>
+        <Boat>
+          <ID>1</ID>
+          <Type>canoe</Type>
+          <Length>Quack quack!</Length>
+        </Boat>
+      </Boats>
     </Member>
     <Member>
       <ID>2</ID>
@@ -30,8 +36,14 @@
       <ID>3</ID>
       <Name>Batman</Name>
       <PersonalNumber>19500718-9999</PersonalNumber>
-      <BoatAmount>0</BoatAmount>
-      <Boats />
+      <BoatAmount>1</BoatAmount>
+      <Boats>
+        <Boat>
+          <ID>1</ID>
+          <Type>other</Type>
+          <Length>9 meter</Length>
+        </Boat>
+      </Boats>
     </Member>
   </Members>
 </MemberList>
