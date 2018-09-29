@@ -83,10 +83,11 @@ namespace RegistryApp.view
                 RegistryUI.AddBoat(memberID);
             }
             else if (userArguments[0] == "list" &&
-                userArguments[1] == "all" &&
-                userArguments[3] == "compact")
+                userArguments[1] == "all")
             {
-                // compact list
+                RegistryUI.ListAllMembers(
+                    userArguments[3] == "verbose"
+                );
             }
             else
             {
