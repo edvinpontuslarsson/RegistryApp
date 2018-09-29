@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MemberList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Members>
+    <Member>
+      <Name>Edvin Larsson</Name>
+      <PersonalNumber>19910718-xxxx</PersonalNumber>
+      <BoatAmount>0</BoatAmount>
+      <Boats />
+    </Member>
+  </Members>
+</MemberList>

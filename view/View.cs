@@ -27,6 +27,8 @@ namespace RegistryApp.view
             Console.Write("  How can I be of service?: ");
         }
 
+        // TODO: have array with commands in separate view class
+        // here just loop and Console.WriteLine every item
         public void ListCommands()
         {
             Console.WriteLine(

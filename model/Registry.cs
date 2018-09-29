@@ -7,8 +7,6 @@ namespace RegistryApp.model
 {
     public class Registry
     {
-        private MemberList _members;
-
         private Boat[] _boats;
 
         public void AddMember(string name, string personalNumber)
@@ -17,25 +15,40 @@ namespace RegistryApp.model
             member.Name = name;
             member.PersonalNumber = personalNumber;
 
-            // MemberList memberList = new MemberList();
-            // memberList.AddMember(member);
+            // new MemberList class here
+            MemberList memberList = new MemberList();
+            memberList.AddMember(member);
 
-            List<Member> members = new List<Member>();
+            PutXmlFile(memberList);
+            /* 
+            List<Member> members;
+
+            bool registryExists = File.Exists(GetStorageDirectory());
+
+            if (registryExists)
+            {
+                members = GetMembers();
+            } 
+            else
+            {
+                members = new List<Member>();
+            }
+
             members.Add(member);
 
-            PutXmlFile(members);
+            PutXmlFile(members); */
         }
 
         /// <summary>
-        /// Using a method described here:
+        /// Inspired by a method described here:
         /// https://www.codeproject.com/Articles/483055/XML-Serialization-and-Deserialization-Part
         /// </summary>
-        private void PutXmlFile(List<Member> members)
+        private void PutXmlFile(MemberList members)
         {
             string storageDirectory = GetStorageDirectory();
 
             XmlSerializer serializer = 
-                new XmlSerializer(typeof(List<Member>));
+                new XmlSerializer(typeof(MemberList));
 
             using (TextWriter writer = new StreamWriter(storageDirectory))
             {
@@ -47,18 +60,18 @@ namespace RegistryApp.model
         {
             // TODO: implement this
         }
-
-        /*
-        private MemberList GetMembers(string memberlist)
+/*
+        public List<Member> GetMembers()
         {
             return "TODO: Implement this";
         }
-        */
-
+  */
         private string GetStorageDirectory()
         {
             string projectDir = Directory.GetCurrentDirectory();
-            return $"{projectDir}/storage/Members.xml";
+            string storageDirectory = 
+                $"{projectDir}/storage/Registry.xml";
+            return storageDirectory;
         }
     }
 }

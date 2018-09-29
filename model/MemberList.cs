@@ -5,8 +5,6 @@ namespace RegistryApp.model
 {
     public class MemberList
     {
-        public int MemberAmount { get; set; }
-
         public List<Member> Members { get; set; }
 
         public MemberList()
@@ -17,7 +15,6 @@ namespace RegistryApp.model
         public void AddMember(Member member)
         {
             Members.Add(member);
-            MemberAmount += 1;
         }
     }
 }

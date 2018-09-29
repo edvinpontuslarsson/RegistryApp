@@ -17,13 +17,11 @@ namespace RegistryApp.controller
             _registry = new model.Registry();
 
             
-            _registry.AddMember("Donald Duck", "19070926-313");
+            _registry.AddMember("Edvin Larsson", "19910718-xxxx");
         }
 
-        public void RunApp()
-        {
-            _view.GreetUser();
-
+        public void RunApp() // Maybe have this method with while & try catch in program
+        { // call method here in Controllers, high level in controller
             while (true) // while app is running
             {
                 try
