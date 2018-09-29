@@ -5,6 +5,8 @@ namespace RegistryApp.model
 {
     public class Member
     {
+        public int ID { get; set; }
+
         public string Name { get; set; }
 
         public string PersonalNumber { get; set; }

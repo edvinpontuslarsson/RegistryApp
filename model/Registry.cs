@@ -22,10 +22,14 @@ namespace RegistryApp.model
             if (registryExists)
             {
                 memberList = GetExistingMemberList();
+
+                int memberAmount = memberList.Members.Count;
+                member.ID = memberAmount + 1;
             } 
             else
             {
                 memberList = new MemberList();
+                member.ID = 1;
             }
 
             memberList.AddMember(member);

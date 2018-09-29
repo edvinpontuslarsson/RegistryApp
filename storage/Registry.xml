@@ -2,12 +2,14 @@
 <MemberList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Members>
     <Member>
-      <Name>Edvin Larsson</Name>
-      <PersonalNumber>19910718-xxxx</PersonalNumber>
+      <ID>1</ID>
+      <Name>Donald Duck</Name>
+      <PersonalNumber>19100718-313</PersonalNumber>
       <BoatAmount>0</BoatAmount>
       <Boats />
     </Member>
     <Member>
+      <ID>2</ID>
       <Name>Donald Duck</Name>
       <PersonalNumber>19100718-313</PersonalNumber>
       <BoatAmount>0</BoatAmount>
