@@ -28,7 +28,6 @@ namespace RegistryApp.view
             Console.Write("  Type: ");
             string type = Console.ReadLine().ToLower();
             
-            // logical error
             if (type != "sailboat" && type != "motorsailer" &&
                 type != "kayak" && type != "canoe")
             {

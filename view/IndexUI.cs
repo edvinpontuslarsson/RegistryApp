@@ -4,11 +4,14 @@ namespace RegistryApp.view
 {
     public class IndexUI
     {
+        private UserCommands UserCommands { get; set; }
+
         private RegistryUI RegistryUI { get; set; }
 
         public IndexUI()
         {
             RegistryUI = new RegistryUI();
+            UserCommands = new UserCommands();
         }
 
         public void GreetUser() 
@@ -79,6 +82,12 @@ namespace RegistryApp.view
                     
                 RegistryUI.AddBoat(memberID);
             }
+            else if (userArguments[0] == "list" &&
+                userArguments[1] == "all" &&
+                userArguments[3] == "compact")
+            {
+                // compact list
+            }
             else
             {
                 InstructUser(true);
@@ -98,35 +107,13 @@ namespace RegistryApp.view
             return integer;
         }
 
-        // TODO: have array with commands in separate view class
-        // here just loop and Console.WriteLine every item
         private void ListCommands()
         {
-            Console.WriteLine(
-                "To list commands, enter:\n" +
-                "  list commands\n"
-            );
-
-            Console.WriteLine(
-                "To add member, enter:\n" +
-                "  add member\n"
-            );
-             
-            Console.WriteLine(
-                "To add boat to a member, enter:\n" +
-                "  add boat to member [int memberID]\n"
-            );
-            /*
-            Console.WriteLine(
-                "To edit a member, enter:\n" +
-                "  edit member [int memberID]\n"
-            );
-
-            Console.WriteLine(
-                "To edit boat of a member, enter:\n" +
-                "  edit boat [int boatID] of " + 
-                "member [int memberID]\n"
-            );*/
+            string[] commands = UserCommands.Commands;
+            foreach (string command in commands)
+            {
+                Console.WriteLine(command);
+            }
         }
 
         private void RectifyUser(string instruction)
