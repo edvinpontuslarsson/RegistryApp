@@ -8,7 +8,7 @@ namespace RegistryApp.view
 
         public UserCommands()
         {
-            Commands = new string[7];
+            Commands = new string[9];
 
             Commands[0] = "\nTo list commands, enter:\n" +
                 "  list commands\n";
@@ -34,6 +34,13 @@ namespace RegistryApp.view
 
             Commands[6] = "To see a specific member's information, enter:\n" +
                 "  list member [int memberID]\n";
+
+            Commands[7] = "To delete a member, enter:\n" +
+                "  delete member [int memberID]\n";
+
+            Commands[8] = "To delete boat of a member, enter:\n" +
+                "  delete boat [int boatID] of " + 
+                "member [int memberID]\n";
         }
     }
 }

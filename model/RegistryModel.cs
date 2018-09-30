@@ -68,7 +68,13 @@ namespace RegistryApp.model
             UpdateXmlFile();
         }
 
-        public void Delete
+        public void DeleteMember(int memberID)
+        {
+            MemberList = GetExistingMemberList();
+            int memberIndex = memberID - 1;
+            MemberList.Members.RemoveAt(memberIndex);
+            UpdateXmlFile();
+        }
 
         public void AddBoat(int memberID, string type, string length)
         {

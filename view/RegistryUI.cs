@@ -97,6 +97,12 @@ namespace RegistryApp.view
             Console.WriteLine("\n Member edited succesfully!");
         }
 
+        public void DeleteMember(int memberID)
+        {
+            RegistryModel.DeleteMember(memberID);
+            Console.WriteLine("\n Member deleted succesfully!");
+        }
+
         private void ConsoleGuidingInfo(string info)
         {
             Console.BackgroundColor = ConsoleColor.Blue;

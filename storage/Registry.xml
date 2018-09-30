@@ -15,17 +15,11 @@
       </Boats>
     </Member>
     <Member>
-      <ID>2</ID>
-      <Name>Donald Duck</Name>
-      <PersonalNumber>Quack quack quack</PersonalNumber>
-      <BoatAmount>1</BoatAmount>
-      <Boats>
-        <Boat>
-          <ID>1</ID>
-          <Type>sailboat</Type>
-          <Length>Soooo many feet</Length>
-        </Boat>
-      </Boats>
+      <ID>3</ID>
+      <Name>Homer Simpson</Name>
+      <PersonalNumber>D'oh!</PersonalNumber>
+      <BoatAmount>0</BoatAmount>
+      <Boats />
     </Member>
   </Members>
 </MemberList>

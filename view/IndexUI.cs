@@ -125,6 +125,13 @@ namespace RegistryApp.view
                     ownerOfBoatID, boatToEditID
                 );
             }
+            else if (userArguments[0] == "delete" &&
+                userArguments[1] == "member")
+            {
+                int deleteMemberID =
+                    GetParsedIntOrException(userArguments[2]);
+                RegistryUI.DeleteMember(deleteMemberID);
+            }
             else
             {
                 InstructUser(true);
