@@ -23,7 +23,7 @@ namespace RegistryApp.model
 
             if (registryExists)
             {
-                MemberList = GetExistingMemberList();
+                MemberList = GetMemberList();
 
                 int indexOfPreviousMember =
                     MemberList.Members.Count - 1;
@@ -73,19 +73,70 @@ namespace RegistryApp.model
 
         /// <summary>
         /// Inspired by a method described here:
-        /// https://www.codeproject.com/Articles/483055/XML-Serialization-and-Deserialization-Part
+        /// https://www.codeproject.com/Articles/487571/XML-Serialization-and-Deserialization-Part-2
         /// </summary>
-        private void UpdateXmlFile()
+        public MemberList GetMemberList()
         {
-            string storageDirectory = GetStorageDirectory();
-
-            XmlSerializer serializer = 
-                new XmlSerializer(typeof(MemberList));
-
-            using (TextWriter writer = new StreamWriter(storageDirectory))
-            {
-                serializer.Serialize(writer, MemberList);
+            bool registryExists = File.Exists(GetStorageDirectory());
+            if (!registryExists) {
+                throw new ArgumentOutOfRangeException();
             }
+
+            XmlSerializer xmlDeserializer = new XmlSerializer(typeof(MemberList));
+            TextReader reader = new StreamReader(GetStorageDirectory());
+
+            object deserializer = xmlDeserializer.Deserialize(reader);
+            MemberList memberList = (MemberList)deserializer;
+
+            return memberList;
+        }
+
+        public Member GetMember(int memberID)
+        {
+            MemberList = GetMemberList();
+
+            int memberIndex = 0;
+            bool memberExists = false;
+
+            for (int i = 0; i < MemberList.Members.Count; i++)
+            {
+                if (MemberList.Members[i].ID == memberID)
+                {
+                    memberIndex = i;
+                    memberExists = true;
+                    break;
+                }
+            }
+
+            if (!memberExists)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            return MemberList.Members[memberIndex];
+        }
+
+        public Boat GetBoat(Member boatOwner, int boatID)
+        {
+            int boatIndex = 0;
+            bool boatExists = false;
+
+            for (int i = 0; i < boatOwner.Boats.Count; i++)
+            {
+                if (boatOwner.Boats[i].ID == boatID)
+                {
+                    boatIndex = i;
+                    boatExists = true;
+                    break;
+                }
+            }
+
+            if (!boatExists)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            return boatOwner.Boats[boatIndex];
         }
 
         public void EditMember(
@@ -126,74 +177,6 @@ namespace RegistryApp.model
             UpdateXmlFile();
         }
 
-        public Boat GetBoat(Member boatOwner, int boatID)
-        {
-            int boatIndex = 0;
-            bool boatExists = false;
-
-            for (int i = 0; i < boatOwner.Boats.Count; i++)
-            {
-                if (boatOwner.Boats[i].ID == boatID)
-                {
-                    boatIndex = i;
-                    boatExists = true;
-                    break;
-                }
-            }
-
-            if (!boatExists)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            return boatOwner.Boats[boatIndex];
-        }
-        
-        public Member GetMember(int memberID)
-        {
-            MemberList = GetExistingMemberList();
-
-            int memberIndex = 0;
-            bool memberExists = false;
-
-            for (int i = 0; i < MemberList.Members.Count; i++)
-            {
-                if (MemberList.Members[i].ID == memberID)
-                {
-                    memberIndex = i;
-                    memberExists = true;
-                    break;
-                }
-            }
-
-            if (!memberExists)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            return MemberList.Members[memberIndex];
-        }
-
-        /// <summary>
-        /// Inspired by a method described here:
-        /// https://www.codeproject.com/Articles/487571/XML-Serialization-and-Deserialization-Part-2
-        /// </summary>
-        public MemberList GetExistingMemberList()
-        {
-            bool registryExists = File.Exists(GetStorageDirectory());
-            if (!registryExists) {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            XmlSerializer xmlDeserializer = new XmlSerializer(typeof(MemberList));
-            TextReader reader = new StreamReader(GetStorageDirectory());
-
-            object deserializer = xmlDeserializer.Deserialize(reader);
-            MemberList memberList = (MemberList)deserializer;
-
-            return memberList;
-        }
-  
         private string GetStorageDirectory()
         {
             string projectDir = Directory.GetCurrentDirectory();
@@ -201,5 +184,22 @@ namespace RegistryApp.model
                 $"{projectDir}/storage/Registry.xml";
             return storageDirectory;
         }
+
+        /// <summary>
+        /// Inspired by a method described here:
+        /// https://www.codeproject.com/Articles/483055/XML-Serialization-and-Deserialization-Part
+        /// </summary>
+        private void UpdateXmlFile()
+        {
+            string storageDirectory = GetStorageDirectory();
+
+            XmlSerializer serializer = 
+                new XmlSerializer(typeof(MemberList));
+
+            using (TextWriter writer = new StreamWriter(storageDirectory))
+            {
+                serializer.Serialize(writer, MemberList);
+            }
+        }        
     }
 }

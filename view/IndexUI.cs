@@ -55,6 +55,23 @@ namespace RegistryApp.view
             Console.WriteLine(instruction);
         }
 
+        private void RectifyUser(string instruction)
+        {
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(instruction);
+            Console.ResetColor();
+        }
+
+        private void ListCommands()
+        {
+            string[] commands = UserCommands.Commands;
+            foreach (string command in commands)
+            {
+                Console.WriteLine(command);
+            }
+        }
+
         private void AskForUserInput()
         {
             Console.Write("\n  How can I be of service?: ");
@@ -69,36 +86,6 @@ namespace RegistryApp.view
                 lowUserInput.Split(" ");
             
             return userArguments;
-        }
-
-        private int GetParsedIntOrException(string input)
-        {
-            int integer;
-
-            bool canBeInt =
-                Int32.TryParse(input, out integer);
-            if (!canBeInt)
-            {
-                throw new FormatException();
-            }
-            return integer;
-        }
-
-        private void ListCommands()
-        {
-            string[] commands = UserCommands.Commands;
-            foreach (string command in commands)
-            {
-                Console.WriteLine(command);
-            }
-        }
-
-        private void RectifyUser(string instruction)
-        {
-            Console.BackgroundColor = ConsoleColor.Red;
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine(instruction);
-            Console.ResetColor();
         }
 
         private void ProcessUserInput(string[] userArguments)
@@ -177,6 +164,19 @@ namespace RegistryApp.view
             {
                 InstructUser(true);
             }
+        }
+
+        private int GetParsedIntOrException(string input)
+        {
+            int integer;
+
+            bool canBeInt =
+                Int32.TryParse(input, out integer);
+            if (!canBeInt)
+            {
+                throw new FormatException();
+            }
+            return integer;
         }
     }
 }

@@ -37,6 +37,29 @@ namespace RegistryApp.view
             Console.WriteLine("\nBoat added succesfully!");
         }
 
+        public void EditMember(int memberID)
+        {
+            model.Member memberToEdit = 
+                RegistryModel.GetMember(memberID);
+
+            ConsoleGuidingInfo("Leave blank to leave unedited");
+            
+            Console.Write($"  Name ({memberToEdit.Name}): ");
+            string nameInput = Console.ReadLine();
+            string newName = nameInput != ""
+                ? nameInput
+                : memberToEdit.Name;
+
+            Console.Write($"  Personal number ({memberToEdit.PersonalNumber}): ");
+            string personalNrInput = Console.ReadLine();
+            string newPersonalNr = personalNrInput != ""
+                ? personalNrInput
+                : memberToEdit.PersonalNumber;
+
+            RegistryModel.EditMember(memberToEdit, newName, newPersonalNr);
+            Console.WriteLine("\n Member edited succesfully!");
+        }
+
         public void EditBoat(int memberID, int boatId)
         {
             model.Member boatOwner = 
@@ -65,40 +88,6 @@ namespace RegistryApp.view
             Console.WriteLine("\n Boat edited succesfully!");
         }
 
-        public string GetBoatType(string typeInput)
-        {
-            if (typeInput != "sailboat" && typeInput != "motorsailer" &&
-                typeInput != "kayak" && typeInput != "canoe")
-            {
-                typeInput = "other";
-            }
-
-            return typeInput;
-        }
-
-        public void EditMember(int memberID)
-        {
-            model.Member memberToEdit = 
-                RegistryModel.GetMember(memberID);
-
-            ConsoleGuidingInfo("Leave blank to leave unedited");
-            
-            Console.Write($"  Name ({memberToEdit.Name}): ");
-            string nameInput = Console.ReadLine();
-            string newName = nameInput != ""
-                ? nameInput
-                : memberToEdit.Name;
-
-            Console.Write($"  Personal number ({memberToEdit.PersonalNumber}): ");
-            string personalNrInput = Console.ReadLine();
-            string newPersonalNr = personalNrInput != ""
-                ? personalNrInput
-                : memberToEdit.PersonalNumber;
-
-            RegistryModel.EditMember(memberToEdit, newName, newPersonalNr);
-            Console.WriteLine("\n Member edited succesfully!");
-        }
-
         public void DeleteMember(int memberID)
         {
             RegistryModel.DeleteMember(memberID);
@@ -109,6 +98,17 @@ namespace RegistryApp.view
         {
             RegistryModel.DeleteBoat(memberID, boatId);
             Console.WriteLine("\n Boat deleted succesfully!");
+        }
+
+        public string GetBoatType(string typeInput)
+        {
+            if (typeInput != "sailboat" && typeInput != "motorsailer" &&
+                typeInput != "kayak" && typeInput != "canoe")
+            {
+                typeInput = "other";
+            }
+
+            return typeInput;
         }
 
         private void ConsoleGuidingInfo(string info)
@@ -141,7 +141,7 @@ namespace RegistryApp.view
 
         public void ListAllMembers(bool verbose)
         {
-            model.MemberList memberList = RegistryModel.GetExistingMemberList();
+            model.MemberList memberList = RegistryModel.GetMemberList();
 
             foreach (model.Member member in memberList.Members)
             {
