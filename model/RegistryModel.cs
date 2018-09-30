@@ -43,6 +43,34 @@ namespace RegistryApp.model
             UpdateXmlFile();
         }
 
+        public void AddBoat(int memberID, string type, string length)
+        {
+            Member currentMember = GetMember(memberID);
+
+            Boat = new Boat();
+
+            if (currentMember.Boats.Count > 0)
+            {
+                int indexOfPreviousBoat =
+                    currentMember.Boats.Count - 1;
+                int idOfPreviousBoat =
+                    currentMember.Boats[indexOfPreviousBoat].ID;
+
+                Boat.ID = idOfPreviousBoat + 1;
+            }
+            else
+            {
+                Boat.ID = 1;
+            }
+
+            Boat.Type = type;
+            Boat.Length =length;
+
+            currentMember.AddBoat(Boat);
+
+            UpdateXmlFile();
+        }
+
         /// <summary>
         /// Inspired by a method described here:
         /// https://www.codeproject.com/Articles/483055/XML-Serialization-and-Deserialization-Part
@@ -85,27 +113,6 @@ namespace RegistryApp.model
             // TODO: do this
         }
 
-        public void AddBoat(int memberID, string type, string length)
-        {
-            MemberList = GetExistingMemberList();
-            
-            if (memberID > MemberList.Members.Count) {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            int memberIndex = memberID - 1;
-
-            Boat = new Boat();
-            Boat.ID = 
-                MemberList.Members[memberIndex]
-                .BoatAmount + 1;
-            Boat.Type = type;
-            Boat.Length =length;
-            MemberList.Members[memberIndex].AddBoat(Boat);
-
-            UpdateXmlFile();
-        }
-
         public void EditBoat(
             Boat boatToEdit, string newType, string newLength
         )
@@ -120,18 +127,14 @@ namespace RegistryApp.model
         {
             MemberList = GetExistingMemberList();
 
-            if (memberID > MemberList.Members.Count) {
-                throw new ArgumentOutOfRangeException();
-            }
+            
+            
+            // TODO: this is obviously wrong, fix
+            
 
-            int memberIndex = memberID - 1;
-            int boatIndex = boatID - 1;
-
-            Member currentMember = MemberList.Members[memberIndex];
-            Boat boat = currentMember.Boats[boatIndex];
-
-            return boat;
+            return MemberList.Members[0].Boats[0];
         }
+        
 
         public Member GetMember(int memberID)
         {

@@ -5,12 +5,23 @@
       <ID>1</ID>
       <Name>Batman</Name>
       <PersonalNumber>I'm Batman!</PersonalNumber>
-      <BoatAmount>1</BoatAmount>
+      <BoatAmount>4</BoatAmount>
       <Boats>
         <Boat>
           <ID>1</ID>
           <Type>canoe</Type>
           <Length>Batman!</Length>
+        </Boat>
+        <Boat>
+          <ID>2</ID>
+        </Boat>
+        <Boat>
+          <ID>3</ID>
+        </Boat>
+        <Boat>
+          <ID>4</ID>
+          <Type>motorsailer</Type>
+          <Length>50 feet</Length>
         </Boat>
       </Boats>
     </Member>
