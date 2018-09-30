@@ -16,8 +16,8 @@
     </Member>
     <Member>
       <ID>2</ID>
-      <Name>Homer Simpson</Name>
-      <PersonalNumber>D'oh!</PersonalNumber>
+      <Name>Donald Duck</Name>
+      <PersonalNumber>Quack quack quack</PersonalNumber>
       <BoatAmount>1</BoatAmount>
       <Boats>
         <Boat>

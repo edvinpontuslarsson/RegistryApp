@@ -56,25 +56,19 @@ namespace RegistryApp.model
             }
         }
 
-        public void EditMember( // TODO: call GetMember() & shorten this
+        public void EditMember(
             int memberID, string newName, string newPersonalNumber
         )
         {
-            MemberList = GetExistingMemberList();
-            
-            if (memberID > MemberList.Members.Count) {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            int memberIndex = memberID - 1;
-
-            Member memberToEdit = MemberList.Members[memberIndex];
+            Member memberToEdit = GetMember(memberID);
 
             memberToEdit.Name = newName;
             memberToEdit.PersonalNumber = newPersonalNumber;
 
             UpdateXmlFile();
         }
+
+        public void Delete
 
         public void AddBoat(int memberID, string type, string length)
         {
