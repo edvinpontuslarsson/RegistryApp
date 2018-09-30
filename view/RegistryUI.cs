@@ -39,8 +39,10 @@ namespace RegistryApp.view
 
         public void EditBoat(int memberID, int boatId)
         {
+            model.Member boatOwner = 
+                RegistryModel.GetMember(memberID);
             model.Boat boatToEdit =
-                RegistryModel.GetBoat(memberID, boatId);
+                RegistryModel.GetBoat(boatOwner, boatId);
 
             ConsoleGuidingInfo("Leave blank to leave unedited");
 
@@ -101,6 +103,12 @@ namespace RegistryApp.view
         {
             RegistryModel.DeleteMember(memberID);
             Console.WriteLine("\n Member deleted succesfully!");
+        }
+
+        public void DeleteBoat(int memberID, int boatId)
+        {
+            RegistryModel.DeleteBoat(memberID, boatId);
+            Console.WriteLine("\n Boat deleted succesfully!");
         }
 
         private void ConsoleGuidingInfo(string info)

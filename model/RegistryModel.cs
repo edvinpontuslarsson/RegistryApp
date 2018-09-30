@@ -115,21 +115,35 @@ namespace RegistryApp.model
             UpdateXmlFile();
         }
 
-        public void DeleteBoat(int memberID)
+        public void DeleteBoat(int memberID, int boatID)
         {
-            // TODO: do this
+            Member boatOwner = GetMember(memberID);
+            Boat boatToDelete = GetBoat(boatOwner, boatID);
+            boatOwner.Boats.Remove(boatToDelete);
+            UpdateXmlFile();
         }
 
-        public Boat GetBoat(int memberID, int boatID)
+        public Boat GetBoat(Member boatOwner, int boatID)
         {
-            MemberList = GetExistingMemberList();
+            int boatIndex = 0;
+            bool boatExists = false;
 
-            
-            
-            // TODO: this is obviously wrong, fix
-            
+            for (int i = 0; i < boatOwner.Boats.Count; i++)
+            {
+                if (boatOwner.Boats[i].ID == boatID)
+                {
+                    boatIndex = i;
+                    boatExists = true;
+                    break;
+                }
+            }
 
-            return MemberList.Members[0].Boats[0];
+            if (!boatExists)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            return boatOwner.Boats[boatIndex];
         }
         
         public Member GetMember(int memberID)
@@ -137,19 +151,19 @@ namespace RegistryApp.model
             MemberList = GetExistingMemberList();
 
             int memberIndex = 0;
-            bool doesExist = false;
+            bool memberExists = false;
 
             for (int i = 0; i < MemberList.Members.Count; i++)
             {
                 if (MemberList.Members[i].ID == memberID)
                 {
                     memberIndex = i;
-                    doesExist = true;
+                    memberExists = true;
                     break;
                 }
             }
 
-            if (!doesExist)
+            if (!memberExists)
             {
                 throw new ArgumentOutOfRangeException();
             }

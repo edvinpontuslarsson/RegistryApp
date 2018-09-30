@@ -71,6 +71,36 @@ namespace RegistryApp.view
             return userArguments;
         }
 
+        private int GetParsedIntOrException(string input)
+        {
+            int integer;
+
+            bool canBeInt =
+                Int32.TryParse(input, out integer);
+            if (!canBeInt)
+            {
+                throw new FormatException();
+            }
+            return integer;
+        }
+
+        private void ListCommands()
+        {
+            string[] commands = UserCommands.Commands;
+            foreach (string command in commands)
+            {
+                Console.WriteLine(command);
+            }
+        }
+
+        private void RectifyUser(string instruction)
+        {
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(instruction);
+            Console.ResetColor();
+        }
+
         private void ProcessUserInput(string[] userArguments)
         {
             if (userArguments[0] == "list" &&
@@ -115,14 +145,14 @@ namespace RegistryApp.view
             else if (userArguments[0] == "edit" &&
                 userArguments[1] == "boat")
             {
-                int ownerOfBoatID =
+                int ownerOfEditBoatID =
                     GetParsedIntOrException(userArguments[5]);
 
                 int boatToEditID =
                     GetParsedIntOrException(userArguments[2]);
 
                 RegistryUI.EditBoat(
-                    ownerOfBoatID, boatToEditID
+                    ownerOfEditBoatID, boatToEditID
                 );
             }
             else if (userArguments[0] == "delete" &&
@@ -132,40 +162,21 @@ namespace RegistryApp.view
                     GetParsedIntOrException(userArguments[2]);
                 RegistryUI.DeleteMember(deleteMemberID);
             }
+            else if (userArguments[0] == "delete" &&
+                userArguments[1] == "boat")
+            {
+                int ownerOfDeleteBoatID =
+                    GetParsedIntOrException(userArguments[5]);
+                int deleteBoatID =
+                    GetParsedIntOrException(userArguments[2]);
+                RegistryUI.DeleteBoat(
+                    ownerOfDeleteBoatID, deleteBoatID
+                );
+            }
             else
             {
                 InstructUser(true);
             }
-        }
-
-        private int GetParsedIntOrException(string input)
-        {
-            int integer;
-
-            bool canBeInt =
-                Int32.TryParse(input, out integer);
-            if (!canBeInt)
-            {
-                throw new FormatException();
-            }
-            return integer;
-        }
-
-        private void ListCommands()
-        {
-            string[] commands = UserCommands.Commands;
-            foreach (string command in commands)
-            {
-                Console.WriteLine(command);
-            }
-        }
-
-        private void RectifyUser(string instruction)
-        {
-            Console.BackgroundColor = ConsoleColor.Red;
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine(instruction);
-            Console.ResetColor();
         }
     }
 }
