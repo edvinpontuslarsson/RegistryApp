@@ -93,7 +93,7 @@ namespace RegistryApp.view
                 ? personalNrInput
                 : memberToEdit.PersonalNumber;
 
-            RegistryModel.EditMember(memberID, newName, newPersonalNr);
+            RegistryModel.EditMember(memberToEdit, newName, newPersonalNr);
             Console.WriteLine("\n Member edited succesfully!");
         }
 

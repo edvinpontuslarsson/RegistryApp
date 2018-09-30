@@ -89,28 +89,13 @@ namespace RegistryApp.model
         }
 
         public void EditMember(
-            int memberID, string newName, string newPersonalNumber
+            Member memberToEdit, string newName, string newPersonalNumber
         )
         {
-            Member memberToEdit = GetMember(memberID);
-
             memberToEdit.Name = newName;
             memberToEdit.PersonalNumber = newPersonalNumber;
 
             UpdateXmlFile();
-        }
-
-        public void DeleteMember(int memberID)
-        {
-            MemberList = GetExistingMemberList();
-            int memberIndex = memberID - 1; // OK, have to redo
-            MemberList.Members.RemoveAt(memberIndex);
-            UpdateXmlFile();
-        }
-
-        public void DeleteBoat(int memberID)
-        {
-            // TODO: do this
         }
 
         public void EditBoat(
@@ -121,6 +106,18 @@ namespace RegistryApp.model
             boatToEdit.Length = newLength;
 
             UpdateXmlFile();
+        }
+
+        public void DeleteMember(int memberID)
+        {
+            Member memberToDelete = GetMember(memberID);
+            MemberList.Members.Remove(memberToDelete);
+            UpdateXmlFile();
+        }
+
+        public void DeleteBoat(int memberID)
+        {
+            // TODO: do this
         }
 
         public Boat GetBoat(int memberID, int boatID)
@@ -135,21 +132,18 @@ namespace RegistryApp.model
             return MemberList.Members[0].Boats[0];
         }
         
-
         public Member GetMember(int memberID)
         {
             MemberList = GetExistingMemberList();
 
-            // just to initialize variable:
-            Member rightMember = MemberList.Members[0];
-
+            int memberIndex = 0;
             bool doesExist = false;
 
-            foreach (Member member in MemberList.Members)
+            for (int i = 0; i < MemberList.Members.Count; i++)
             {
-                if (member.ID == memberID)
+                if (MemberList.Members[i].ID == memberID)
                 {
-                    rightMember = member;
+                    memberIndex = i;
                     doesExist = true;
                     break;
                 }
@@ -160,7 +154,7 @@ namespace RegistryApp.model
                 throw new ArgumentOutOfRangeException();
             }
 
-            return rightMember;
+            return MemberList.Members[memberIndex];
         }
 
         /// <summary>

@@ -26,16 +26,16 @@
       </Boats>
     </Member>
     <Member>
-      <ID>3</ID>
-      <Name>Homer Simpson</Name>
+      <ID>4</ID>
+      <Name>Marge Simpson</Name>
       <PersonalNumber>D'oh!</PersonalNumber>
       <BoatAmount>0</BoatAmount>
       <Boats />
     </Member>
     <Member>
-      <ID>4</ID>
-      <Name>Marge Simpson</Name>
-      <PersonalNumber>D'oh!</PersonalNumber>
+      <ID>5</ID>
+      <Name>Donald Duck</Name>
+      <PersonalNumber>Quack quack quack</PersonalNumber>
       <BoatAmount>0</BoatAmount>
       <Boats />
     </Member>
