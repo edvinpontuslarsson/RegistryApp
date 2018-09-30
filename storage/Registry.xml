@@ -21,5 +21,12 @@
       <BoatAmount>0</BoatAmount>
       <Boats />
     </Member>
+    <Member>
+      <ID>4</ID>
+      <Name>Marge Simpson</Name>
+      <PersonalNumber>D'oh!</PersonalNumber>
+      <BoatAmount>0</BoatAmount>
+      <Boats />
+    </Member>
   </Members>
 </MemberList>

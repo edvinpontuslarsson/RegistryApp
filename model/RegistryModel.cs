@@ -25,8 +25,12 @@ namespace RegistryApp.model
             {
                 MemberList = GetExistingMemberList();
 
-                int memberAmount = MemberList.Members.Count;
-                Member.ID = memberAmount + 1;
+                int indexOfPreviousMember =
+                    MemberList.Members.Count - 1;
+                int idOfPreviousMember = 
+                    MemberList.Members[indexOfPreviousMember].ID;
+
+                Member.ID = idOfPreviousMember + 1;
             } 
             else
             {
@@ -71,9 +75,14 @@ namespace RegistryApp.model
         public void DeleteMember(int memberID)
         {
             MemberList = GetExistingMemberList();
-            int memberIndex = memberID - 1;
+            int memberIndex = memberID - 1; // OK, have to redo
             MemberList.Members.RemoveAt(memberIndex);
             UpdateXmlFile();
+        }
+
+        public void DeleteBoat(int memberID)
+        {
+            // TODO: do this
         }
 
         public void AddBoat(int memberID, string type, string length)
@@ -128,13 +137,27 @@ namespace RegistryApp.model
         {
             MemberList = GetExistingMemberList();
 
-            if (memberID > MemberList.Members.Count) {
+            // just to initialize variable:
+            Member rightMember = MemberList.Members[0];
+
+            bool doesExist = false;
+
+            foreach (Member member in MemberList.Members)
+            {
+                if (member.ID == memberID)
+                {
+                    rightMember = member;
+                    doesExist = true;
+                    break;
+                }
+            }
+
+            if (!doesExist)
+            {
                 throw new ArgumentOutOfRangeException();
             }
 
-            int memberIndex = memberID - 1;
-
-            return MemberList.Members[memberIndex];
+            return rightMember;
         }
 
         /// <summary>
