@@ -8,7 +8,7 @@ namespace RegistryApp.view
 
         public UserCommands()
         {
-            Commands = new string[5];
+            Commands = new string[6];
 
             Commands[0] = "\nTo list commands, enter:\n" +
                 "  list commands\n";
@@ -25,17 +25,13 @@ namespace RegistryApp.view
             Commands[4] = "To display verbose list of all members, enter:\n" + 
                 "  list all members verbose\n";
             
-            /*
-            Console.WriteLine(
-                "To edit a member, enter:\n" +
-                "  edit member [int memberID]\n"
-            );
-
-            Console.WriteLine(
-                "To edit boat of a member, enter:\n" +
+            
+            Commands[4] = "To edit a member, enter:\n" +
+                "  edit member [int memberID]\n";
+                
+            Commands[5] = "To edit boat of a member, enter:\n" +
                 "  edit boat [int boatID] of " + 
-                "member [int memberID]\n"
-            );*/
+                "member [int memberID]\n";
         }
     }
 }

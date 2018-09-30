@@ -41,6 +41,11 @@ namespace RegistryApp.view
             Console.WriteLine("Boat added succesfully!");
         }
 
+        public void EditMember(int memberID)
+        {
+            
+        }
+
         public void ListAllMembers(bool verbose)
         {
             model.MemberList memberList = RegistryModel.GetExistingMemberList();

@@ -56,7 +56,9 @@ namespace RegistryApp.model
             }
         }
 
-        public void AddBoat(int memberID, string type, string length)
+        public void EditMember(
+            int memberID, string newName, string newPersonalNumber
+        )
         {
             MemberList = GetExistingMemberList();
             
@@ -64,13 +66,31 @@ namespace RegistryApp.model
                 throw new ArgumentOutOfRangeException();
             }
 
+            Member memberToEdit = MemberList.Members[memberID -1];
+
+            memberToEdit.Name = newName;
+            memberToEdit.PersonalNumber = newPersonalNumber;
+
+            UpdateXmlFile();
+        }
+
+        public void AddBoat(int memberID, string type, string length)
+        {
+            MemberList = GetExistingMemberList();
+            
+            if (memberID > MemberList.Members.Count) {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            int memberIndex = memberID - 1;
+
             Boat = new Boat();
             Boat.ID = 
-                MemberList.Members[memberID]
+                MemberList.Members[memberIndex]
                 .BoatAmount + 1;
             Boat.Type = type;
             Boat.Length =length;
-            MemberList.Members[memberID].AddBoat(Boat);
+            MemberList.Members[memberIndex].AddBoat(Boat);
 
             UpdateXmlFile();
         }

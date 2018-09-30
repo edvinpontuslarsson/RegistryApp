@@ -87,11 +87,10 @@ namespace RegistryApp.view
                 userArguments[1] == "boat" &&
                 userArguments[4] != null)
             {
-                int memberID = 
-                    GetParsedIntOrException(userArguments[4])
-                    - 1;
+                int addBoatToMemberID = 
+                    GetParsedIntOrException(userArguments[4]);
                     
-                RegistryUI.AddBoat(memberID);
+                RegistryUI.AddBoat(addBoatToMemberID);
             }
             else if (userArguments[0] == "list" &&
                 userArguments[1] == "all")
@@ -99,6 +98,12 @@ namespace RegistryApp.view
                 RegistryUI.ListAllMembers(
                     userArguments[3] == "verbose"
                 );
+            }
+            else if (userArguments[0] == "edit" &&
+                userArguments[1] == "member")
+            {
+                // int editUserID =
+
             }
             else
             {
