@@ -98,12 +98,19 @@ namespace RegistryApp.view
                     userArguments[3] == "verbose"
                 );
             }
+            else if (userArguments[0] == "list" &&
+                userArguments[1] == "member")
+            {
+                int infoMemberId =
+                    GetParsedIntOrException(userArguments[2]);
+                RegistryUI.ListOneMember(infoMemberId);
+            }
             else if (userArguments[0] == "edit" &&
                 userArguments[1] == "member")
             {
-                int editUserID =
+                int editMemberID =
                     GetParsedIntOrException(userArguments[2]);
-                RegistryUI.EditMember(editUserID);
+                RegistryUI.EditMember(editMemberID);
             }
             else
             {

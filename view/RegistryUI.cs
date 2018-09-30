@@ -72,6 +72,26 @@ namespace RegistryApp.view
             Console.ResetColor();
         }
 
+        public void ListOneMember(int memberID)
+        {
+            model.Member member =
+                RegistryModel.GetMember(memberID);
+            
+            string print = $"\nMember ID: {member.ID}\n" +
+                $"Name: {member.Name}\n" +
+                $"Personal number: {member.PersonalNumber}\n" +
+                $"Boat amount: {member.BoatAmount}\n";
+
+            foreach (model.Boat boat in member.Boats)
+            {
+                print += $"\nBoat ID: {boat.ID}\n" +
+                    $"Boat type: {boat.Type}\n" +
+                    $"Boat length: {boat.Length}\n";
+            }
+
+            Console.WriteLine(print);
+        }
+
         public void ListAllMembers(bool verbose)
         {
             model.MemberList memberList = RegistryModel.GetExistingMemberList();
@@ -83,7 +103,8 @@ namespace RegistryApp.view
 
                 if (verbose)
                 {
-                    print += $"Personal number: {member.PersonalNumber}\n";
+                    print += $"Personal number: {member.PersonalNumber}\n" +
+                        $"Boat amount: {member.BoatAmount}\n";
                     
                     foreach (model.Boat boat in member.Boats)
                     {
