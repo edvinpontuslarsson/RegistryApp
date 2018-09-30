@@ -26,19 +26,52 @@ namespace RegistryApp.view
         public void AddBoat(int memberID)
         {
             Console.Write("  Type: ");
-            string type = Console.ReadLine().ToLower();
+            string typeInput = Console.ReadLine().ToLower();
             
-            if (type != "sailboat" && type != "motorsailer" &&
-                type != "kayak" && type != "canoe")
-            {
-                type = "other";
-            }
+            string type = GetBoatType(typeInput);
 
             Console.Write("  Length: ");
             string length = Console.ReadLine();
 
             RegistryModel.AddBoat(memberID, type, length);
             Console.WriteLine("Boat added succesfully!");
+        }
+
+        public void EditBoat(int memberID, int boatId)
+        {
+            model.Boat boatToEdit =
+                RegistryModel.GetBoat(memberID, boatId);
+
+            ConsoleGuidingInfo("Leave blank to leave unedited");
+
+            Console.Write($"  Type ({boatToEdit.Type}): ");
+            string typeInput = Console.ReadLine();
+            string newTypeInput = typeInput != ""
+                ? typeInput
+                : boatToEdit.Type;
+            string newType = GetBoatType(newTypeInput);
+
+            Console.Write($"  Length ({boatToEdit.Length}): ");
+            string lengthInput = Console.ReadLine();
+            string newLength = lengthInput != ""
+                ? lengthInput
+                : boatToEdit.Length;
+            
+            RegistryModel.EditBoat(
+                boatToEdit, newType, newLength
+            );
+            Console.WriteLine("\n Boat edited succesfully!");
+        }
+
+        public string GetBoatType(string typeInput)
+        {
+            if (typeInput != "sailboat" && typeInput != "motorsailer" &&
+                typeInput != "kayak" && typeInput != "canoe")
+            {
+                typeInput = "other";
+            }
+
+            return typeInput;
         }
 
         public void EditMember(int memberID)

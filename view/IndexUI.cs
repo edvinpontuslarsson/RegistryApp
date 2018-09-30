@@ -112,6 +112,19 @@ namespace RegistryApp.view
                     GetParsedIntOrException(userArguments[2]);
                 RegistryUI.EditMember(editMemberID);
             }
+            else if (userArguments[0] == "edit" &&
+                userArguments[1] == "boat")
+            {
+                int ownerOfBoatID =
+                    GetParsedIntOrException(userArguments[5]);
+
+                int boatToEditID =
+                    GetParsedIntOrException(userArguments[2]);
+
+                RegistryUI.EditBoat(
+                    ownerOfBoatID, boatToEditID
+                );
+            }
             else
             {
                 InstructUser(true);
