@@ -8,7 +8,7 @@ namespace RegistryApp.view
 
         public UserCommands()
         {
-            Commands = new string[4];
+            Commands = new string[5];
 
             Commands[0] = "\nTo list commands, enter:\n" +
                 "  list commands\n";
@@ -20,7 +20,10 @@ namespace RegistryApp.view
                 "  add boat to member [int memberID]\n";
 
             Commands[3] = "To display compact list of all members, enter:\n" + 
-                "  list all members compact";
+                "  list all members compact\n";
+
+            Commands[4] = "To display verbose list of all members, enter:\n" + 
+                "  list all members verbose\n";
             
             /*
             Console.WriteLine(

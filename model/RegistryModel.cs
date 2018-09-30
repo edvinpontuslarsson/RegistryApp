@@ -61,7 +61,7 @@ namespace RegistryApp.model
             MemberList = GetExistingMemberList();
             
             if (memberID > MemberList.Members.Count + 1) {
-                throw new ArgumentException();
+                throw new ArgumentOutOfRangeException();
             }
 
             Boat = new Boat();
@@ -79,11 +79,11 @@ namespace RegistryApp.model
         {
             bool registryExists = File.Exists(GetStorageDirectory());
             if (!registryExists) {
-                throw new ArgumentException();
+                throw new ArgumentOutOfRangeException();
             }
 
             if (memberID > MemberList.Members.Count + 1) {
-                throw new ArgumentException();
+                throw new ArgumentOutOfRangeException();
             }
 
             return MemberList.Members[memberID - 1];
@@ -97,7 +97,7 @@ namespace RegistryApp.model
         {
             bool registryExists = File.Exists(GetStorageDirectory());
             if (!registryExists) {
-                throw new ArgumentException();
+                throw new ArgumentOutOfRangeException();
             }
 
             XmlSerializer xmlDeserializer = new XmlSerializer(typeof(MemberList));

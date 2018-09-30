@@ -30,7 +30,18 @@ namespace RegistryApp.view
 
         public void HandleException(Exception exception)
         {
-            
+            if (exception is FormatException)
+            {
+                InstructUser(true);
+            }
+            else if (exception is ArgumentOutOfRangeException)
+            {
+                Console.WriteLine("\nRequested resource does not exist \n");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong");
+            }
         }
 
         private void InstructUser(bool error = false) 
@@ -103,7 +114,7 @@ namespace RegistryApp.view
                 Int32.TryParse(input, out integer);
             if (!canBeInt)
             {
-                throw new ArgumentException();
+                throw new FormatException();
             }
             return integer;
         }
