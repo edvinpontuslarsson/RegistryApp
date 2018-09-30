@@ -20,7 +20,7 @@ namespace RegistryApp.view
             string personalNumber = Console.ReadLine();
 
             RegistryModel.AddMember(name, personalNumber);
-            Console.WriteLine("\n Member added succesfully!");
+            Console.WriteLine("\nMember added succesfully!");
         }
 
         public void AddBoat(int memberID)
@@ -34,7 +34,7 @@ namespace RegistryApp.view
             string length = Console.ReadLine();
 
             RegistryModel.AddBoat(memberID, type, length);
-            Console.WriteLine("Boat added succesfully!");
+            Console.WriteLine("\nBoat added succesfully!");
         }
 
         public void EditBoat(int memberID, int boatId)

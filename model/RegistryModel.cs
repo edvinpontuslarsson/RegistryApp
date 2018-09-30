@@ -120,6 +120,9 @@ namespace RegistryApp.model
             Member boatOwner = GetMember(memberID);
             Boat boatToDelete = GetBoat(boatOwner, boatID);
             boatOwner.Boats.Remove(boatToDelete);
+
+            boatOwner.BoatAmount -= 1;
+
             UpdateXmlFile();
         }
 

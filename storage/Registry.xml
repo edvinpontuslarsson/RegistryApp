@@ -2,29 +2,6 @@
 <MemberList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Members>
     <Member>
-      <ID>1</ID>
-      <Name>Batman</Name>
-      <PersonalNumber>I'm Batman!</PersonalNumber>
-      <BoatAmount>5</BoatAmount>
-      <Boats>
-        <Boat>
-          <ID>1</ID>
-          <Type>canoe</Type>
-          <Length>Batman!</Length>
-        </Boat>
-        <Boat>
-          <ID>4</ID>
-          <Type>motorsailer</Type>
-          <Length>50 feet</Length>
-        </Boat>
-        <Boat>
-          <ID>5</ID>
-          <Type>sailboat</Type>
-          <Length>30 feet</Length>
-        </Boat>
-      </Boats>
-    </Member>
-    <Member>
       <ID>4</ID>
       <Name>Marge Simpson</Name>
       <PersonalNumber>D'oh!</PersonalNumber>
@@ -35,8 +12,14 @@
       <ID>5</ID>
       <Name>Donald Duck</Name>
       <PersonalNumber>Quack quack quack</PersonalNumber>
-      <BoatAmount>0</BoatAmount>
-      <Boats />
+      <BoatAmount>1</BoatAmount>
+      <Boats>
+        <Boat>
+          <ID>2</ID>
+          <Type>sailboat</Type>
+          <Length>50 duck feet</Length>
+        </Boat>
+      </Boats>
     </Member>
   </Members>
 </MemberList>
