@@ -6,8 +6,6 @@ namespace RegistryApp.view
     {
         private model.RegistryModel RegistryModel;
 
-        private model.MemberList MemberList;
-
         public RegistryUI()
         {
             RegistryModel = new model.RegistryModel();
@@ -45,9 +43,9 @@ namespace RegistryApp.view
 
         public void ListAllMembers(bool verbose)
         {
-            MemberList = RegistryModel.GetExistingMemberList();
+            model.MemberList memberList = RegistryModel.GetExistingMemberList();
 
-            foreach (model.Member member in MemberList.Members)
+            foreach (model.Member member in memberList.Members)
             {
                 string print = $"\nMember ID: {member.ID}\n" +
                 $"Name: {member.Name}\n";

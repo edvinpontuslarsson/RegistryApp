@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MemberList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Members>
+    <Member>
+      <ID>1</ID>
+      <Name>Batman</Name>
+      <PersonalNumber>I'm Batman!</PersonalNumber>
+      <BoatAmount>1</BoatAmount>
+      <Boats>
+        <Boat>
+          <ID>1</ID>
+          <Type>canoe</Type>
+          <Length>Batman!</Length>
+        </Boat>
+      </Boats>
+    </Member>
+    <Member>
+      <ID>2</ID>
+      <Name>Donald Duck</Name>
+      <PersonalNumber>Quack!</PersonalNumber>
+      <BoatAmount>0</BoatAmount>
+      <Boats />
+    </Member>
+  </Members>
+</MemberList>
