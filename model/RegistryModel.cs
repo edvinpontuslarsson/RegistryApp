@@ -62,11 +62,13 @@ namespace RegistryApp.model
         {
             MemberList = GetExistingMemberList();
             
-            if (memberID > MemberList.Members.Count + 1) {
+            if (memberID > MemberList.Members.Count) {
                 throw new ArgumentOutOfRangeException();
             }
 
-            Member memberToEdit = MemberList.Members[memberID -1];
+            int memberIndex = memberID - 1;
+
+            Member memberToEdit = MemberList.Members[memberIndex];
 
             memberToEdit.Name = newName;
             memberToEdit.PersonalNumber = newPersonalNumber;
@@ -97,12 +99,14 @@ namespace RegistryApp.model
 
         public Member GetMember(int memberID)
         {
+            MemberList = GetExistingMemberList();
+
             bool registryExists = File.Exists(GetStorageDirectory());
             if (!registryExists) {
                 throw new ArgumentOutOfRangeException();
             }
 
-            if (memberID > MemberList.Members.Count + 1) {
+            if (memberID > MemberList.Members.Count) {
                 throw new ArgumentOutOfRangeException();
             }
 

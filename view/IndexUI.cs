@@ -40,7 +40,7 @@ namespace RegistryApp.view
             }
             else
             {
-                Console.WriteLine("Something went wrong");
+                Console.WriteLine(exception);
             }
         }
 
@@ -88,8 +88,7 @@ namespace RegistryApp.view
                 userArguments[4] != null)
             {
                 int addBoatToMemberID = 
-                    GetParsedIntOrException(userArguments[4]);
-                    
+                    GetParsedIntOrException(userArguments[4]);                    
                 RegistryUI.AddBoat(addBoatToMemberID);
             }
             else if (userArguments[0] == "list" &&
@@ -102,8 +101,9 @@ namespace RegistryApp.view
             else if (userArguments[0] == "edit" &&
                 userArguments[1] == "member")
             {
-                // int editUserID =
-
+                int editUserID =
+                    GetParsedIntOrException(userArguments[2]);
+                RegistryUI.EditMember(editUserID);
             }
             else
             {

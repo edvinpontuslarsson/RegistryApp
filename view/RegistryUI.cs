@@ -43,7 +43,33 @@ namespace RegistryApp.view
 
         public void EditMember(int memberID)
         {
+            model.Member memberToEdit = 
+                RegistryModel.GetMember(memberID);
+
+            ConsoleGuidingInfo("Leave blank to leave unedited");
             
+            Console.Write($"  Name ({memberToEdit.Name}): ");
+            string nameInput = Console.ReadLine();
+            string newName = nameInput != ""
+                ? nameInput
+                : memberToEdit.Name;
+
+            Console.Write($"  Personal number ({memberToEdit.PersonalNumber}): ");
+            string personalNrInput = Console.ReadLine();
+            string newPersonalNr = personalNrInput != ""
+                ? personalNrInput
+                : memberToEdit.PersonalNumber;
+
+            RegistryModel.EditMember(memberID, newName, newPersonalNr);
+            Console.WriteLine("\n Member edited succesfully!");
+        }
+
+        private void ConsoleGuidingInfo(string info)
+        {
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine($"  {info}");
+            Console.ResetColor();
         }
 
         public void ListAllMembers(bool verbose)
