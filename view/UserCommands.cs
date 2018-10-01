@@ -20,10 +20,10 @@ namespace RegistryApp.view
                 "  add boat to member [int memberID]\n";
 
             Commands[3] = "To display compact list of all members, enter:\n" + 
-                "  list all members compact\n";
+                "  list members compact\n";
 
             Commands[4] = "To display verbose list of all members, enter:\n" + 
-                "  list all members verbose\n";
+                "  list members verbose\n";
             
             Commands[4] = "To edit a member, enter:\n" +
                 "  edit member [int memberID]\n";
