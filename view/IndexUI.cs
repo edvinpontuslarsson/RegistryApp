@@ -1,12 +1,9 @@
 using System;
-using System.Linq;
 
 namespace RegistryApp.view
 {
     public class IndexUI
     {
-        private string[] UserArguments;
-
         private UserCommands UserCommands;
 
         private RegistryUI RegistryUI;
@@ -27,8 +24,8 @@ namespace RegistryApp.view
         {
             AskForUserInput();
 
-            UserArguments = GetUserArguments();
-            ProcessUserInput();
+            string[] userArguments = GetUserArguments();
+            ProcessUserInput(userArguments);
         }
 
         public void HandleException(Exception exception)
@@ -85,77 +82,80 @@ namespace RegistryApp.view
             string userInput = Console.ReadLine();
             string lowUserInput = userInput.ToLower();
 
-            string[] UserArguments =
+            string[] userArguments =
                 lowUserInput.Split(" ");
             
-            return UserArguments;
+            return userArguments;
         }
 
-        private bool UserWantsTo(string verb, string noun)
+        private void ProcessUserInput(string[] userArguments)
         {
-            bool foundVerb = UserArguments.Contains(verb);
-            bool foundNoun = UserArguments.Contains(noun);
-            return foundVerb && foundNoun;
-        }
-
-        private void ProcessUserInput()
-        {
-            if (UserWantsTo("list", "commands")) 
+            if (userArguments[0] == "list" &&
+                userArguments[1] == "commands") 
             {
                 ListCommands();
             }
-            else if (UserWantsTo("add", "member"))
+            else if (userArguments[0] == "add" &&
+                userArguments[1] == "member")
             {
                 RegistryUI.AddMember();
             }
-            else if (UserWantsTo("add", "boat"))
+            else if (userArguments[0] == "add" &&
+                userArguments[1] == "boat" &&
+                userArguments[4] != null)
             {
                 int addBoatToMemberID = 
-                    GetParsedIntOrException(UserArguments[4]);                    
+                    GetParsedIntOrException(userArguments[4]);                    
                 RegistryUI.AddBoat(addBoatToMemberID);
             }
-            else if (UserWantsTo("list", "members"))
+            else if (userArguments[0] == "list" &&
+                userArguments[1] == "all")
             {
                 RegistryUI.ListAllMembers(
-                    UserArguments[3] == "verbose"
+                    userArguments[3] == "verbose"
                 );
             }
-            else if (UserWantsTo("list", "member"))
+            else if (userArguments[0] == "list" &&
+                userArguments[1] == "member")
             {
                 int infoMemberId =
-                    GetParsedIntOrException(UserArguments[2]);
+                    GetParsedIntOrException(userArguments[2]);
                 RegistryUI.ListOneMember(infoMemberId);
             }
-            else if (UserWantsTo("edit", "member"))
+            else if (userArguments[0] == "edit" &&
+                userArguments[1] == "member")
             {
                 int editMemberID =
-                    GetParsedIntOrException(UserArguments[2]);
+                    GetParsedIntOrException(userArguments[2]);
                 RegistryUI.EditMember(editMemberID);
             }
-            else if (UserWantsTo("edit", "boat"))
+            else if (userArguments[0] == "edit" &&
+                userArguments[1] == "boat")
             {
                 int ownerOfEditBoatID =
-                    GetParsedIntOrException(UserArguments[5]);
+                    GetParsedIntOrException(userArguments[5]);
 
                 int boatToEditID =
-                    GetParsedIntOrException(UserArguments[2]);
+                    GetParsedIntOrException(userArguments[2]);
 
                 RegistryUI.EditBoat(
                     ownerOfEditBoatID, boatToEditID
                 );
             }
-            else if (UserWantsTo("delete", "member"))
+            else if (userArguments[0] == "delete" &&
+                userArguments[1] == "member")
             {
                 int deleteMemberID =
-                    GetParsedIntOrException(UserArguments[2]);
+                    GetParsedIntOrException(userArguments[2]);
                 RegistryUI.DeleteMember(deleteMemberID);
             }
-            else if (UserWantsTo("delete", "boat"))
+            else if (userArguments[0] == "delete" &&
+                userArguments[1] == "boat")
             {
                 int ownerOfDeleteBoatID =
-                    GetParsedIntOrException(UserArguments[5]);
+                    GetParsedIntOrException(userArguments[5]);
                 int deleteBoatID =
-                    GetParsedIntOrException(UserArguments[2]);
+                    GetParsedIntOrException(userArguments[2]);
                 RegistryUI.DeleteBoat(
                     ownerOfDeleteBoatID, deleteBoatID
                 );
