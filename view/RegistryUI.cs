@@ -4,11 +4,11 @@ namespace RegistryApp.view
 {
     public class RegistryUI
     {
-        private model.RegistryModel RegistryModel;
+        private model.RegistryModel _registryModel;
 
         public RegistryUI()
         {
-            RegistryModel = new model.RegistryModel();
+            _registryModel = new model.RegistryModel();
         }
 
         public void RegisterMember()
@@ -17,7 +17,7 @@ namespace RegistryApp.view
 
             string personalNumber = GetPersonalNumber();
 
-            RegistryModel.StoreMember(name, personalNumber);
+            _registryModel.StoreMember(name, personalNumber);
             Console.WriteLine("\nMember added succesfully!");
         }
 
@@ -45,14 +45,14 @@ namespace RegistryApp.view
             Console.Write("  Length: ");
             string length = Console.ReadLine();
 
-            RegistryModel.AddBoat(memberID, type, length);
+            _registryModel.AddBoat(memberID, type, length);
             Console.WriteLine("\nBoat added succesfully!");
         }
 
         public void EditMember(int memberID)
         {
             model.Member memberToEdit = 
-                RegistryModel.GetMember(memberID);
+                _registryModel.GetMember(memberID);
 
             ConsoleGuidingInfo("Leave blank to leave unedited");
             
@@ -68,16 +68,16 @@ namespace RegistryApp.view
                 ? personalNrInput
                 : memberToEdit.PersonalNumber;
 
-            RegistryModel.EditMember(memberToEdit, newName, newPersonalNr);
+            _registryModel.EditMember(memberToEdit, newName, newPersonalNr);
             Console.WriteLine("\n Member edited succesfully!");
         }
 
         public void EditBoat(int memberID, int boatId)
         {
             model.Member boatOwner = 
-                RegistryModel.GetMember(memberID);
+                _registryModel.GetMember(memberID);
             model.Boat boatToEdit =
-                RegistryModel.GetBoat(boatOwner, boatId);
+                _registryModel.GetBoat(boatOwner, boatId);
 
             ConsoleGuidingInfo("Leave blank to leave unedited");
 
@@ -94,7 +94,7 @@ namespace RegistryApp.view
                 ? lengthInput
                 : boatToEdit.Length;
             
-            RegistryModel.EditBoat(
+            _registryModel.EditBoat(
                 boatToEdit, newType, newLength
             );
             Console.WriteLine("\n Boat edited succesfully!");
@@ -102,13 +102,13 @@ namespace RegistryApp.view
 
         public void DeleteMember(int memberID)
         {
-            RegistryModel.DeleteMember(memberID);
+            _registryModel.DeleteMember(memberID);
             Console.WriteLine("\n Member deleted succesfully!");
         }
 
         public void DeleteBoat(int memberID, int boatId)
         {
-            RegistryModel.DeleteBoat(memberID, boatId);
+            _registryModel.DeleteBoat(memberID, boatId);
             Console.WriteLine("\n Boat deleted succesfully!");
         }
 
@@ -134,7 +134,7 @@ namespace RegistryApp.view
         public void ListOneMember(int memberID)
         {
             model.Member member =
-                RegistryModel.GetMember(memberID);
+                _registryModel.GetMember(memberID);
             
             string print = $"\nMember ID: {member.ID}\n" +
                 $"Name: {member.Name}\n" +
@@ -153,7 +153,7 @@ namespace RegistryApp.view
 
         public void ListAllMembers(bool verbose)
         {
-            model.MemberList memberList = RegistryModel.GetMemberList();
+            model.MemberList memberList = _registryModel.GetMemberList();
 
             foreach (model.Member member in memberList.Members)
             {

@@ -7,38 +7,38 @@ namespace RegistryApp.model
 {
     public class RegistryModel
     {
-        private MemberList MemberList;
+        private MemberList _memberList;
 
-        private Member Member;
+        private Member _member;
 
-        private Boat Boat;
+        private Boat _boat;
 
         public void StoreMember(string name, string personalNumber)
         {
-            Member = new Member();
-            Member.Name = name;
-            Member.PersonalNumber = personalNumber;
+            _member = new Member();
+            _member.Name = name;
+            _member.PersonalNumber = personalNumber;
 
             bool registryExists = File.Exists(GetStorageDirectory());
 
             if (registryExists)
             {
-                MemberList = GetMemberList();
+                _memberList = GetMemberList();
 
                 int indexOfPreviousMember =
-                    MemberList.Members.Count - 1;
+                    _memberList.Members.Count - 1;
                 int idOfPreviousMember = 
-                    MemberList.Members[indexOfPreviousMember].ID;
+                    _memberList.Members[indexOfPreviousMember].ID;
 
-                Member.ID = idOfPreviousMember + 1;
+                _member.ID = idOfPreviousMember + 1;
             } 
             else
             {
-                MemberList = new MemberList();
-                Member.ID = 1;
+                _memberList = new MemberList();
+                _member.ID = 1;
             }
 
-            MemberList.AddMember(Member);
+            _memberList.AddMember(_member);
 
             UpdateXmlFile();
         }
@@ -47,7 +47,7 @@ namespace RegistryApp.model
         {
             Member currentMember = GetMember(memberID);
 
-            Boat = new Boat();
+            _boat = new Boat();
 
             if (currentMember.Boats.Count > 0)
             {
@@ -56,17 +56,17 @@ namespace RegistryApp.model
                 int idOfPreviousBoat =
                     currentMember.Boats[indexOfPreviousBoat].ID;
 
-                Boat.ID = idOfPreviousBoat + 1;
+                _boat.ID = idOfPreviousBoat + 1;
             }
             else
             {
-                Boat.ID = 1;
+                _boat.ID = 1;
             }
 
-            Boat.Type = type;
-            Boat.Length =length;
+            _boat.Type = type;
+            _boat.Length =length;
 
-            currentMember.AddBoat(Boat);
+            currentMember.AddBoat(_boat);
 
             UpdateXmlFile();
         }
@@ -93,14 +93,14 @@ namespace RegistryApp.model
 
         public Member GetMember(int memberID)
         {
-            MemberList = GetMemberList();
+            _memberList = GetMemberList();
 
             int memberIndex = 0;
             bool memberExists = false;
 
-            for (int i = 0; i < MemberList.Members.Count; i++)
+            for (int i = 0; i < _memberList.Members.Count; i++)
             {
-                if (MemberList.Members[i].ID == memberID)
+                if (_memberList.Members[i].ID == memberID)
                 {
                     memberIndex = i;
                     memberExists = true;
@@ -113,7 +113,7 @@ namespace RegistryApp.model
                 throw new ArgumentOutOfRangeException();
             }
 
-            return MemberList.Members[memberIndex];
+            return _memberList.Members[memberIndex];
         }
 
         public Boat GetBoat(Member boatOwner, int boatID)
@@ -162,7 +162,7 @@ namespace RegistryApp.model
         public void DeleteMember(int memberID)
         {
             Member memberToDelete = GetMember(memberID);
-            MemberList.Members.Remove(memberToDelete);
+            _memberList.Members.Remove(memberToDelete);
             UpdateXmlFile();
         }
 
@@ -198,7 +198,7 @@ namespace RegistryApp.model
 
             using (TextWriter writer = new StreamWriter(storageDirectory))
             {
-                serializer.Serialize(writer, MemberList);
+                serializer.Serialize(writer, _memberList);
             }
         }        
     }

@@ -4,14 +4,14 @@ namespace RegistryApp.view
 {
     public class IndexUI
     {
-        private UserCommands UserCommands;
+        private UserCommands _userCommands;
 
-        private RegistryUI RegistryUI;
+        private RegistryUI _registryUI;
 
         public IndexUI()
         {
-            RegistryUI = new RegistryUI();
-            UserCommands = new UserCommands();
+            _registryUI = new RegistryUI();
+            _userCommands = new UserCommands();
         }
 
         public void GreetUser() 
@@ -65,7 +65,7 @@ namespace RegistryApp.view
 
         private void ListCommands()
         {
-            string[] commands = UserCommands.Commands;
+            string[] commands = _userCommands.Commands;
             foreach (string command in commands)
             {
                 Console.WriteLine(command);
@@ -98,7 +98,7 @@ namespace RegistryApp.view
             else if (userArguments[0] == "add" &&
                 userArguments[1] == "member")
             {
-                RegistryUI.RegisterMember();
+                _registryUI.RegisterMember();
             }
             else if (userArguments[0] == "add" &&
                 userArguments[1] == "boat" &&
@@ -106,12 +106,12 @@ namespace RegistryApp.view
             {
                 int addBoatToMemberID = 
                     GetParsedIntOrException(userArguments[4]);                    
-                RegistryUI.AddBoat(addBoatToMemberID);
+                _registryUI.AddBoat(addBoatToMemberID);
             }
             else if (userArguments[0] == "list" &&
                 userArguments[1] == "all")
             {
-                RegistryUI.ListAllMembers(
+                _registryUI.ListAllMembers(
                     userArguments[3] == "verbose"
                 );
             }
@@ -120,14 +120,14 @@ namespace RegistryApp.view
             {
                 int infoMemberId =
                     GetParsedIntOrException(userArguments[2]);
-                RegistryUI.ListOneMember(infoMemberId);
+                _registryUI.ListOneMember(infoMemberId);
             }
             else if (userArguments[0] == "edit" &&
                 userArguments[1] == "member")
             {
                 int editMemberID =
                     GetParsedIntOrException(userArguments[2]);
-                RegistryUI.EditMember(editMemberID);
+                _registryUI.EditMember(editMemberID);
             }
             else if (userArguments[0] == "edit" &&
                 userArguments[1] == "boat")
@@ -138,7 +138,7 @@ namespace RegistryApp.view
                 int boatToEditID =
                     GetParsedIntOrException(userArguments[2]);
 
-                RegistryUI.EditBoat(
+                _registryUI.EditBoat(
                     ownerOfEditBoatID, boatToEditID
                 );
             }
@@ -147,7 +147,7 @@ namespace RegistryApp.view
             {
                 int deleteMemberID =
                     GetParsedIntOrException(userArguments[2]);
-                RegistryUI.DeleteMember(deleteMemberID);
+                _registryUI.DeleteMember(deleteMemberID);
             }
             else if (userArguments[0] == "delete" &&
                 userArguments[1] == "boat")
@@ -156,7 +156,7 @@ namespace RegistryApp.view
                     GetParsedIntOrException(userArguments[5]);
                 int deleteBoatID =
                     GetParsedIntOrException(userArguments[2]);
-                RegistryUI.DeleteBoat(
+                _registryUI.DeleteBoat(
                     ownerOfDeleteBoatID, deleteBoatID
                 );
             }
