@@ -98,7 +98,7 @@ namespace RegistryApp.view
             else if (userArguments[0] == "add" &&
                 userArguments[1] == "member")
             {
-                RegistryUI.AddMember();
+                RegistryUI.RegisterMember();
             }
             else if (userArguments[0] == "add" &&
                 userArguments[1] == "boat" &&

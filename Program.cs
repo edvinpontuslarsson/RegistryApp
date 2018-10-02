@@ -9,9 +9,6 @@ namespace RegistryApp
     {
         private static view.IndexUI IndexUI { get; set; }
 
-        /// <summary>
-        /// Starts the application
-        /// </summary>
         static void Main()
         {            
             IndexUI = new view.IndexUI();

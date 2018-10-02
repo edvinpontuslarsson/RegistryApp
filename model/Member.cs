@@ -20,6 +20,12 @@ namespace RegistryApp.model
             Boats = new List<Boat>();
         }
 
+        public void SetMember(string name, string personalNumber)
+        {
+            Name = name;
+            PersonalNumber = personalNumber;
+        }
+
         public void AddBoat(Boat boat)
         {
             boat.ID = BoatAmount + 1;

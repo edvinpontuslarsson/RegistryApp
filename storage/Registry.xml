@@ -17,7 +17,20 @@
         <Boat>
           <ID>2</ID>
           <Type>sailboat</Type>
-          <Length>50 duck feet</Length>
+          <Length>40 duck feet</Length>
+        </Boat>
+      </Boats>
+    </Member>
+    <Member>
+      <ID>6</ID>
+      <Name>Spiderman</Name>
+      <PersonalNumber>I don't know</PersonalNumber>
+      <BoatAmount>1</BoatAmount>
+      <Boats>
+        <Boat>
+          <ID>1</ID>
+          <Type>motorsailer</Type>
+          <Length>32 feet</Length>
         </Boat>
       </Boats>
     </Member>

@@ -11,16 +11,28 @@ namespace RegistryApp.view
             RegistryModel = new model.RegistryModel();
         }
 
-        public void AddMember()
+        public void RegisterMember()
+        {
+            string name = GetName();
+
+            string personalNumber = GetPersonalNumber();
+
+            RegistryModel.StoreMember(name, personalNumber);
+            Console.WriteLine("\nMember added succesfully!");
+        }
+
+        private string GetName()
         {
             Console.Write("  Name: ");
             string name = Console.ReadLine();
+            return name;
+        }
 
+        private string GetPersonalNumber()
+        {
             Console.Write("  Personal number: ");
             string personalNumber = Console.ReadLine();
-
-            RegistryModel.AddMember(name, personalNumber);
-            Console.WriteLine("\nMember added succesfully!");
+            return personalNumber;
         }
 
         public void AddBoat(int memberID)

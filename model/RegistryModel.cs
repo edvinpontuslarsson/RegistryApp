@@ -13,7 +13,7 @@ namespace RegistryApp.model
 
         private Boat Boat;
 
-        public void AddMember(string name, string personalNumber)
+        public void StoreMember(string name, string personalNumber)
         {
             Member = new Member();
             Member.Name = name;
