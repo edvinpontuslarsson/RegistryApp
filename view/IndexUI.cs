@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace RegistryApp.view
 {
@@ -7,6 +8,8 @@ namespace RegistryApp.view
         private UserCommands _userCommands;
 
         private RegistryUI _registryUI;
+
+        private string[] UserArguments;
 
         public IndexUI()
         {
@@ -24,8 +27,8 @@ namespace RegistryApp.view
         {
             AskForUserInput();
 
-            string[] userArguments = GetUserArguments();
-            ProcessUserInput(userArguments);
+            UserArguments = GetUserArguments();
+            ProcessUserInput(UserArguments);
         }
 
         public void HandleException(Exception exception)
@@ -88,10 +91,24 @@ namespace RegistryApp.view
             return userArguments;
         }
 
+        private bool UserArgumentsContain(string verb, string noun)
+        {
+            bool foundVerb = UserArguments.Contains(verb);
+            bool foundNoun = UserArguments.Contains(noun);
+            return foundVerb && foundNoun;
+        }
+
+        public bool UserWantsToListCommands()
+        {
+            return UserArgumentsContain("list", "commands");
+        }
+
+        /// <summary>
+        /// TODO: Remove Param, put in controller
+        /// </summary>
         private void ProcessUserInput(string[] userArguments)
         {
-            if (userArguments[0] == "list" &&
-                userArguments[1] == "commands") 
+            if (UserWantsToListCommands()) 
             {
                 ListCommands();
             }

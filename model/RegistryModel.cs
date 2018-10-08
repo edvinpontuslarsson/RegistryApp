@@ -7,14 +7,19 @@ namespace RegistryApp.model
 {
     public class RegistryModel
     {
-        private MemberList _memberList;
+        private MemberList _memberList; // TODO: Not needed, just local var
 
-        private Member _member;
+        private Member _member; // TODO: Not needed, just local var
 
-        private Boat _boat;
+        private Boat _boat; // TODO: Not needed, just local var
 
         public void StoreMember(string name, string personalNumber)
         {
+            /*
+                TODO: make Member & Fields private & encapsulated,
+                I probably only need a public field in MemberList
+            */
+
             _member = new Member();
             _member.Name = name;
             _member.PersonalNumber = personalNumber;
