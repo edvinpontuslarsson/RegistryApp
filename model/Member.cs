@@ -14,23 +14,10 @@ namespace RegistryApp.model
         public int BoatAmount { get; set; }
 
         public List<Boat> Boats { get; set; }
-
+     
         public Member()
         {
             Boats = new List<Boat>();
-        }
-
-        public void SetMember(string name, string personalNumber)
-        {
-            Name = name;
-            PersonalNumber = personalNumber;
-        }
-
-        public void AddBoat(Boat boat)
-        {
-            boat.ID = BoatAmount + 1;
-            Boats.Add(boat);
-            BoatAmount += 1;
         }
     }
 }

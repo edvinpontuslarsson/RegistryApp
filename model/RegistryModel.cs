@@ -1,33 +1,30 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Xml.Serialization;
 
 namespace RegistryApp.model
 {
     public class RegistryModel
     {
-        private MemberList _memberList; // TODO: Not needed, just local var
+        private DAO _dao;
 
-        private Member _member; // TODO: Not needed, just local var
-
-        private Boat _boat; // TODO: Not needed, just local var
+        public RegistryModel()
+        {
+            _dao = new DAO();
+        }
 
         public void StoreMember(string name, string personalNumber)
         {
-            /*
-                TODO: make Member & Fields private & encapsulated,
-                I probably only need a public field in MemberList
-            */
+            Member member = new Member();
+            member.Name = name;
+            member.PersonalNumber = personalNumber;
 
-            _member = new Member();
-            _member.Name = name;
-            _member.PersonalNumber = personalNumber;
-
+            // use the public bool method in DAO instead
             bool registryExists = File.Exists(GetStorageDirectory());
 
             if (registryExists)
             {
+                // now broken because removed field, should be local var
                 _memberList = GetMemberList();
 
                 int indexOfPreviousMember =
@@ -35,15 +32,15 @@ namespace RegistryApp.model
                 int idOfPreviousMember = 
                     _memberList.Members[indexOfPreviousMember].ID;
 
-                _member.ID = idOfPreviousMember + 1;
+                member.ID = idOfPreviousMember + 1;
             } 
             else
             {
                 _memberList = new MemberList();
-                _member.ID = 1;
+                member.ID = 1;
             }
 
-            _memberList.AddMember(_member);
+            _memberList.Members.Add(member);
 
             UpdateXmlFile();
         }
@@ -52,7 +49,7 @@ namespace RegistryApp.model
         {
             Member currentMember = GetMember(memberID);
 
-            _boat = new Boat();
+            Boat boat = new Boat();
 
             if (currentMember.Boats.Count > 0)
             {
@@ -61,17 +58,18 @@ namespace RegistryApp.model
                 int idOfPreviousBoat =
                     currentMember.Boats[indexOfPreviousBoat].ID;
 
-                _boat.ID = idOfPreviousBoat + 1;
+                boat.ID = idOfPreviousBoat + 1;
             }
             else
             {
-                _boat.ID = 1;
+                boat.ID = 1;
             }
 
-            _boat.Type = type;
-            _boat.Length =length;
+            boat.Type = type;
+            boat.Length =length;
 
-            currentMember.AddBoat(_boat);
+            currentMember.Boats.Add(boat);
+            currentMember.BoatAmount += 1; 
 
             UpdateXmlFile();
         }
@@ -149,7 +147,7 @@ namespace RegistryApp.model
         )
         {
             memberToEdit.Name = newName;
-            memberToEdit.PersonalNumber = newPersonalNumber;
+            memberToEdit.PersonalNumber= newPersonalNumber;
 
             UpdateXmlFile();
         }
@@ -175,36 +173,11 @@ namespace RegistryApp.model
         {
             Member boatOwner = GetMember(memberID);
             Boat boatToDelete = GetBoat(boatOwner, boatID);
+        
             boatOwner.Boats.Remove(boatToDelete);
-
             boatOwner.BoatAmount -= 1;
 
             UpdateXmlFile();
-        }
-
-        private string GetStorageDirectory()
-        {
-            string projectDir = Directory.GetCurrentDirectory();
-            string storageDirectory = 
-                $"{projectDir}/storage/Registry.xml";
-            return storageDirectory;
-        }
-
-        /// <summary>
-        /// Inspired by a method described here:
-        /// https://www.codeproject.com/Articles/483055/XML-Serialization-and-Deserialization-Part
-        /// </summary>
-        private void UpdateXmlFile()
-        {
-            string storageDirectory = GetStorageDirectory();
-
-            XmlSerializer serializer = 
-                new XmlSerializer(typeof(MemberList));
-
-            using (TextWriter writer = new StreamWriter(storageDirectory))
-            {
-                serializer.Serialize(writer, _memberList);
-            }
-        }        
+        }      
     }
 }

@@ -11,10 +11,5 @@ namespace RegistryApp.model
         {
             Members = new List<Member>();
         }
-
-        public void AddMember(Member member)
-        {
-            Members.Add(member);
-        }
     }
 }
