@@ -11,24 +11,28 @@ namespace RegistryApp.view
             _registryModel = new model.RegistryModel();
         }
 
+        public void DisplaySuccessMessage(string successMessage)
+        {
+            Console.WriteLine($"\n{successMessage}");
+        }
+
         public void RegisterMember()
         {
             string name = GetName();
-
             string personalNumber = GetPersonalNumber();
 
             _registryModel.StoreMember(name, personalNumber);
             Console.WriteLine("\nMember added succesfully!");
         }
 
-        private string GetName()
+        public string GetName()
         {
             Console.Write("  Name: ");
             string name = Console.ReadLine();
             return name;
         }
 
-        private string GetPersonalNumber()
+        public string GetPersonalNumber()
         {
             Console.Write("  Personal number: ");
             string personalNumber = Console.ReadLine();
@@ -179,6 +183,19 @@ namespace RegistryApp.view
 
                 Console.WriteLine(print);
             }
+        }
+
+        private int GetParsedIntOrException(string input)
+        {
+            int integer;
+
+            bool canBeInt =
+                Int32.TryParse(input, out integer);
+            if (!canBeInt)
+            {
+                throw new FormatException();
+            }
+            return integer;
         }
     }
 }

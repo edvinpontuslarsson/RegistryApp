@@ -4,16 +4,11 @@ namespace RegistryApp.view
 {
     public class IndexUI
     {
-        private UserCommands _userCommands;
-
         private RegistryUI _registryUI;
-
-        private string[] UserArguments;
 
         public IndexUI()
         {
             _registryUI = new RegistryUI();
-            _userCommands = new UserCommands();
         }
 
         public void GreetUser() 
@@ -57,15 +52,6 @@ namespace RegistryApp.view
             Console.ResetColor();
         }
 
-        public void ListOptions()
-        {
-            string[] commands = _userCommands.Commands;
-            foreach (string command in commands)
-            {
-                Console.WriteLine(command);
-            }
-        }
-
         public void AskForUserInput()
         {
             Console.Write("\n  How can I be of service?: ");
@@ -80,6 +66,16 @@ namespace RegistryApp.view
                 lowUserInput.Split(" ");
             
             return userArguments;
+        }
+
+        public void ListOptions()
+        {
+            UserCommandArray userCommands = new UserCommandArray();
+            string[] commands =userCommands.Commands;
+            foreach (string command in commands)
+            {
+                Console.WriteLine(command);
+            }
         }
 
         public bool UserWantsToListOptions(string[] userArguments) =>
@@ -113,18 +109,5 @@ namespace RegistryApp.view
 
         public bool UserWantsToDeleteBoat(string[] userArguments) =>
             userArguments[0] == "delete" && userArguments[1] == "boat";
-
-        private int GetParsedIntOrException(string input)
-        {
-            int integer;
-
-            bool canBeInt =
-                Int32.TryParse(input, out integer);
-            if (!canBeInt)
-            {
-                throw new FormatException();
-            }
-            return integer;
-        }
     }
 }

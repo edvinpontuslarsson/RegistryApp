@@ -16,10 +16,11 @@ namespace RegistryApp
         {
             view.IndexUI indexUI = new view.IndexUI();
             view.RegistryUI registryUI = new view.RegistryUI();
+            view.SuccessMessage successMessage = new view.SuccessMessage();
             model.RegistryModel registryModel = new model.RegistryModel();
 
             controller.Controller controller = new controller.Controller(
-                    indexUI, registryUI,registryModel
+                    indexUI, registryUI, successMessage, registryModel
                 );
 
             bool appRuns = true;

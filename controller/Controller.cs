@@ -8,16 +8,20 @@ namespace RegistryApp.controller
 
         private view.RegistryUI _registryUI;
 
+        private view.SuccessMessage _successMessage;
+
         private model.RegistryModel _registryModel;
 
         public Controller(
             view.IndexUI indexUI,
             view.RegistryUI registryUI,
+            view.SuccessMessage successMessage,
             model.RegistryModel registryModel
         )
         {
             _indexUI = indexUI;
             _registryUI = registryUI;
+            _successMessage = successMessage;
             _registryModel = registryModel;
 
             _indexUI.GreetUser();
@@ -46,7 +50,15 @@ namespace RegistryApp.controller
             }
             else if (_indexUI.UserWantsToAddMember(userArguments))
             {
-                _registryUI.RegisterMember();
+                string name = _registryUI.GetName();
+                string personalNumber = 
+                    _registryUI.GetPersonalNumber();
+
+                _registryModel.StoreMember(name, personalNumber);
+
+                _registryUI.DisplaySuccessMessage(
+                    _successMessage.MemberAdded
+                );
             }
             else if (_indexUI.UserWantsToAddBoat(userArguments))
             {

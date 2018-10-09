@@ -2,11 +2,11 @@ using System;
 
 namespace RegistryApp.view
 {
-    public class UserCommands
+    public class UserCommandArray
     {
         public string[] Commands { get; private set; }
 
-        public UserCommands()
+        public UserCommandArray()
         {
             Commands = new string[10];
 
