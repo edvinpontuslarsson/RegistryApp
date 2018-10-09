@@ -1,12 +1,7 @@
 using System;
-using System.Linq;
 
 namespace RegistryApp.view
 {
-    /// <summary>
-    /// TODO: Make this independent of the registry,
-    /// starting point, could lead to login/other things
-    /// </summary>
     public class IndexUI
     {
         private UserCommands _userCommands;
@@ -27,14 +22,6 @@ namespace RegistryApp.view
             InstructUser();
         }
 
-        public void Interact()
-        {
-            AskForUserInput();
-
-            UserArguments = GetUserArguments();
-            ProcessUserInput(UserArguments);
-        }
-
         public void HandleException(Exception exception)
         {
             if (exception is FormatException)
@@ -51,7 +38,7 @@ namespace RegistryApp.view
             }
         }
 
-        private void InstructUser(bool error = false) 
+        public void InstructUser(bool error = false) 
         {
             if (error) {
                 RectifyUser("\nUnknown command");
@@ -70,7 +57,7 @@ namespace RegistryApp.view
             Console.ResetColor();
         }
 
-        private void ListOptions()
+        public void ListOptions()
         {
             string[] commands = _userCommands.Commands;
             foreach (string command in commands)
@@ -79,12 +66,12 @@ namespace RegistryApp.view
             }
         }
 
-        private void AskForUserInput()
+        public void AskForUserInput()
         {
             Console.Write("\n  How can I be of service?: ");
         }
 
-        private string[] GetUserArguments()
+        public string[] GetUserArguments()
         {
             string userInput = Console.ReadLine();
             string lowUserInput = userInput.ToLower();
@@ -95,97 +82,37 @@ namespace RegistryApp.view
             return userArguments;
         }
 
-        private bool UserArgumentsContain(string verb, string noun)
-        {
-            bool foundVerb = UserArguments.Contains(verb);
-            bool foundNoun = UserArguments.Contains(noun);
-            return foundVerb && foundNoun;
-        }
+        public bool UserWantsToListOptions(string[] userArguments) =>
+            userArguments[0] == "list" && userArguments[1] =="commands";
 
-        public bool UserWantsToListOptions()
-        {
-            return UserArgumentsContain("list", "commands");
-        }
+        public bool UserWantsToAddMember(string[] userArguments) =>
+            userArguments[0] == "add" && userArguments[1] == "member";
 
-        /// <summary>
-        /// TODO: Remove Param, put in controller
-        /// </summary>
-        private void ProcessUserInput(string[] userArguments)
-        {
-            if (UserWantsToListOptions()) 
-            {
-                ListOptions();
-            }
-            else if (userArguments[0] == "add" &&
-                userArguments[1] == "member")
-            {
-                _registryUI.RegisterMember();
-            }
-            else if (userArguments[0] == "add" &&
-                userArguments[1] == "boat" &&
-                userArguments[4] != null)
-            {
-                int addBoatToMemberID = 
-                    GetParsedIntOrException(userArguments[4]);                    
-                _registryUI.AddBoat(addBoatToMemberID);
-            }
-            else if (userArguments[0] == "list" &&
-                userArguments[1] == "all")
-            {
-                _registryUI.ListAllMembers(
-                    userArguments[3] == "verbose"
-                );
-            }
-            else if (userArguments[0] == "list" &&
-                userArguments[1] == "member")
-            {
-                int infoMemberId =
-                    GetParsedIntOrException(userArguments[2]);
-                _registryUI.ListOneMember(infoMemberId);
-            }
-            else if (userArguments[0] == "edit" &&
-                userArguments[1] == "member")
-            {
-                int editMemberID =
-                    GetParsedIntOrException(userArguments[2]);
-                _registryUI.EditMember(editMemberID);
-            }
-            else if (userArguments[0] == "edit" &&
-                userArguments[1] == "boat")
-            {
-                int ownerOfEditBoatID =
-                    GetParsedIntOrException(userArguments[5]);
+        public bool UserWantsToAddBoat(string[] userArguments) =>
+            userArguments[0] == "add" && userArguments[1] == "boat" &&
+            userArguments[4] != null;
+        
+        public bool UserWantsToListMembers(string[] userArguments) =>
+            userArguments[0] == "list" && userArguments[1] == "all";
 
-                int boatToEditID =
-                    GetParsedIntOrException(userArguments[2]);
+        public bool UserWantsVerboseList(string[] userArguments) =>
+            userArguments[3] == "verbose";
+        
+        public bool UserWantsToListOneMember(string[] userArguments) =>
+            userArguments[0] == "list" && userArguments[1] == "member";
 
-                _registryUI.EditBoat(
-                    ownerOfEditBoatID, boatToEditID
-                );
-            }
-            else if (userArguments[0] == "delete" &&
-                userArguments[1] == "member")
-            {
-                int deleteMemberID =
-                    GetParsedIntOrException(userArguments[2]);
-                _registryUI.DeleteMember(deleteMemberID);
-            }
-            else if (userArguments[0] == "delete" &&
-                userArguments[1] == "boat")
-            {
-                int ownerOfDeleteBoatID =
-                    GetParsedIntOrException(userArguments[5]);
-                int deleteBoatID =
-                    GetParsedIntOrException(userArguments[2]);
-                _registryUI.DeleteBoat(
-                    ownerOfDeleteBoatID, deleteBoatID
-                );
-            }
-            else
-            {
-                InstructUser(true);
-            }
-        }
+        public bool UserWantsToEditMember(string[] userArguments) =>
+            userArguments[0] == "edit" && userArguments[1] == "member";
+
+        public bool UserWantsToEditBoat(string[] userArguments) =>
+            userArguments[0] == "edit" && userArguments[1] == "boat";
+
+
+        public bool UserWantsToDeleteMember(string[] userArguments) =>
+            userArguments[0] == "delete" && userArguments[1] == "member";
+
+        public bool UserWantsToDeleteBoat(string[] userArguments) =>
+            userArguments[0] == "delete" && userArguments[1] == "boat";
 
         private int GetParsedIntOrException(string input)
         {

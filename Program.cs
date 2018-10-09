@@ -13,20 +13,20 @@ namespace RegistryApp
         }
 
         private static void RunApp()
-        {               
+        {
             view.IndexUI indexUI = new view.IndexUI();
-            indexUI.GreetUser();
+            view.RegistryUI registryUI = new view.RegistryUI();
+            model.RegistryModel registryModel = new model.RegistryModel();
 
-            while (true) // while app is running
+            controller.Controller controller = new controller.Controller(
+                    indexUI, registryUI,registryModel
+                );
+
+            bool appRuns = true;
+
+            while (appRuns)
             {
-                try
-                {
-                    indexUI.Interact();
-                }
-                catch (Exception exception)
-                {
-                    indexUI.HandleException(exception);
-                }
+                controller.Interact();
             }
         }
     }
