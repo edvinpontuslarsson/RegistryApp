@@ -16,13 +16,25 @@ namespace RegistryApp.view
             Console.WriteLine($"\n{successMessage}");
         }
 
-        public void RegisterMember()
-        {
-            string name = GetName();
-            string personalNumber = GetPersonalNumber();
+        public int GetMemberID(string[] userArguments) =>
+            GetIDOf(userArguments, "member");
+        
 
-            _registryModel.StoreMember(name, personalNumber);
-            Console.WriteLine("\nMember added succesfully!");
+        public int GetBoatID(string[] userArguments) =>
+            GetIDOf(userArguments, "boat");
+        
+
+        private int GetIDOf(
+            string[] userArguments, string target
+        )
+        {
+            int targetIndex =
+                Array.IndexOf(userArguments, target);
+            int memberIDIndex = targetIndex + 1;
+            int targetID = GetParsedIntOrException(
+                userArguments[memberIDIndex]
+            );
+            return targetID;
         }
 
         public string GetName()

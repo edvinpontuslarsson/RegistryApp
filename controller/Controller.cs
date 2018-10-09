@@ -29,10 +29,10 @@ namespace RegistryApp.controller
 
         public void Interact()
         {
-            try
+            try // have try catch in Program
             {
-                _indexUI.AskForUserInput();
-                string[] userArguments =
+                _indexUI.AskForUserInput(); // tmi
+                string[] userArguments = // this and Process here
                     _indexUI.GetUserArguments();
                 ProcessUserInput(userArguments);
             }
@@ -50,20 +50,12 @@ namespace RegistryApp.controller
             }
             else if (_indexUI.UserWantsToAddMember(userArguments))
             {
-                string name = _registryUI.GetName();
-                string personalNumber = 
-                    _registryUI.GetPersonalNumber();
-
-                _registryModel.StoreMember(name, personalNumber);
-
-                _registryUI.DisplaySuccessMessage(
-                    _successMessage.MemberAdded
-                );
+                HandleAddMember();
             }
             else if (_indexUI.UserWantsToAddBoat(userArguments))
             {
                 int addBoatToMemberID = 
-                    GetParsedIntOrException(userArguments[4]);                    
+                    _registryUI.GetMemberID(userArguments);                    
                 _registryUI.AddBoat(addBoatToMemberID);
             }
             else if (_indexUI.UserWantsToListMembers(userArguments))
@@ -116,6 +108,19 @@ namespace RegistryApp.controller
             {
                 _indexUI.InstructUser(true);
             }
+        }
+
+        private void HandleAddMember()
+        {
+            string name = _registryUI.GetName();
+            string personalNumber = 
+                _registryUI.GetPersonalNumber();
+
+            _registryModel.StoreMember(name, personalNumber);
+
+            _registryUI.DisplaySuccessMessage(
+                _successMessage.MemberAdded
+            );
         }
     }
 }
