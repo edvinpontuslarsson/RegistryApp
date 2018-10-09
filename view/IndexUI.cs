@@ -3,6 +3,10 @@ using System.Linq;
 
 namespace RegistryApp.view
 {
+    /// <summary>
+    /// TODO: Make this independent of the registry,
+    /// starting point, could lead to login/other things
+    /// </summary>
     public class IndexUI
     {
         private UserCommands _userCommands;
@@ -66,7 +70,7 @@ namespace RegistryApp.view
             Console.ResetColor();
         }
 
-        private void ListCommands()
+        private void ListOptions()
         {
             string[] commands = _userCommands.Commands;
             foreach (string command in commands)
@@ -98,7 +102,7 @@ namespace RegistryApp.view
             return foundVerb && foundNoun;
         }
 
-        public bool UserWantsToListCommands()
+        public bool UserWantsToListOptions()
         {
             return UserArgumentsContain("list", "commands");
         }
@@ -108,9 +112,9 @@ namespace RegistryApp.view
         /// </summary>
         private void ProcessUserInput(string[] userArguments)
         {
-            if (UserWantsToListCommands()) 
+            if (UserWantsToListOptions()) 
             {
-                ListCommands();
+                ListOptions();
             }
             else if (userArguments[0] == "add" &&
                 userArguments[1] == "member")

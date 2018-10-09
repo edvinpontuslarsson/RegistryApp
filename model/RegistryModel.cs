@@ -1,17 +1,13 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace RegistryApp.model
 {
     public class RegistryModel
     {
-        private DAO _dao;
-
-        public RegistryModel()
-        {
-            _dao = new DAO();
-        }
+        private MemberList _memberList;
 
         public void StoreMember(string name, string personalNumber)
         {
@@ -19,12 +15,10 @@ namespace RegistryApp.model
             member.Name = name;
             member.PersonalNumber = personalNumber;
 
-            // use the public bool method in DAO instead
-            bool registryExists = File.Exists(GetStorageDirectory());
-
+            bool registryExists = File.Exists(GetStoragePath());
+            
             if (registryExists)
             {
-                // now broken because removed field, should be local var
                 _memberList = GetMemberList();
 
                 int indexOfPreviousMember =
@@ -80,13 +74,13 @@ namespace RegistryApp.model
         /// </summary>
         public MemberList GetMemberList()
         {
-            bool registryExists = File.Exists(GetStorageDirectory());
+            bool registryExists = File.Exists(GetStoragePath());
             if (!registryExists) {
                 throw new ArgumentOutOfRangeException();
             }
 
             XmlSerializer xmlDeserializer = new XmlSerializer(typeof(MemberList));
-            TextReader reader = new StreamReader(GetStorageDirectory());
+            TextReader reader = new StreamReader(GetStoragePath());
 
             object deserializer = xmlDeserializer.Deserialize(reader);
             MemberList memberList = (MemberList)deserializer;
@@ -178,6 +172,31 @@ namespace RegistryApp.model
             boatOwner.BoatAmount -= 1;
 
             UpdateXmlFile();
-        }      
+        }
+
+        private string GetStoragePath()
+        {
+            string projectDir = Directory.GetCurrentDirectory();
+            string storagePath = 
+                $"{projectDir}/storage/Registry.xml";
+            return storagePath;
+        }
+
+        /// <summary>
+        /// Inspired by a method described here:
+        /// https://www.codeproject.com/Articles/483055/XML-Serialization-and-Deserialization-Part
+        /// </summary>
+        private void UpdateXmlFile()
+        {
+            string storageDirectory = GetStoragePath();
+
+            XmlSerializer serializer = 
+                new XmlSerializer(typeof(MemberList));
+
+            using (TextWriter writer = new StreamWriter(storageDirectory))
+            {
+                serializer.Serialize(writer, _memberList);
+            }
+        }  
     }
 }
