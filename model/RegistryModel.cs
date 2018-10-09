@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.IO;
 using System.Collections.Generic;
 using System.Xml.Serialization;
@@ -93,17 +94,10 @@ namespace RegistryApp.model
             _memberList = GetMemberList();
 
             int memberIndex = 0;
-            bool memberExists = false;
 
-            for (int i = 0; i < _memberList.Members.Count; i++)
-            {
-                if (_memberList.Members[i].ID == memberID)
-                {
-                    memberIndex = i;
-                    memberExists = true;
-                    break;
-                }
-            }
+            bool memberExists =
+                _memberList.Members
+                .Exists(member => member.ID == memberID);
 
             if (!memberExists)
             {
@@ -116,17 +110,9 @@ namespace RegistryApp.model
         public Boat GetBoat(Member boatOwner, int boatID)
         {
             int boatIndex = 0;
-            bool boatExists = false;
 
-            for (int i = 0; i < boatOwner.Boats.Count; i++)
-            {
-                if (boatOwner.Boats[i].ID == boatID)
-                {
-                    boatIndex = i;
-                    boatExists = true;
-                    break;
-                }
-            }
+            bool boatExists = 
+                boatOwner.Boats.Exists(boat => boat.ID == boatID);
 
             if (!boatExists)
             {

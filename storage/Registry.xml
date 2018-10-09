@@ -5,8 +5,14 @@
       <ID>1</ID>
       <Name>Donald Duck</Name>
       <PersonalNumber>Quack quack quack</PersonalNumber>
-      <BoatAmount>0</BoatAmount>
-      <Boats />
+      <BoatAmount>1</BoatAmount>
+      <Boats>
+        <Boat>
+          <ID>1</ID>
+          <Type>sailboat</Type>
+          <Length>28 duck feet</Length>
+        </Boat>
+      </Boats>
     </Member>
     <Member>
       <ID>2</ID>
