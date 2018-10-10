@@ -2,7 +2,8 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
-using System.Xml.Serialization;
+using System.Runtime.Serialization;
+using System.Xml;
 
 namespace RegistryApp.model
 {
@@ -144,20 +145,31 @@ namespace RegistryApp.model
 
         /// <summary>
         /// Inspired by a method described here:
-        /// https://www.codeproject.com/Articles/487571/XML-Serialization-and-Deserialization-Part-2
+        /// https://stackoverflow.com/questions/16943176/how-to-deserialize-xml-using-datacontractserializer
         /// </summary>
         public MemberList GetMemberList()
         {
-            bool registryExists = File.Exists(GetStoragePath());
+            string storagePath = GetStoragePath();
+            bool registryExists = File.Exists(storagePath);
             if (!registryExists) {
                 throw new ArgumentOutOfRangeException();
             }
 
-            XmlSerializer xmlDeserializer = new XmlSerializer(typeof(MemberList));
-            TextReader reader = new StreamReader(GetStoragePath());
+            DataContractSerializer dataHandler =
+                new DataContractSerializer(typeof(MemberList));
 
-            object deserializer = xmlDeserializer.Deserialize(reader);
-            MemberList memberList = (MemberList)deserializer;
+            FileStream fileStream = 
+                new FileStream(storagePath, FileMode.Open);
+
+            XmlDictionaryReader xmlReader =
+                XmlDictionaryReader.CreateTextReader(
+                    fileStream, new XmlDictionaryReaderQuotas()
+                );
+
+            MemberList memberList = 
+                (MemberList)dataHandler.ReadObject(xmlReader);
+            xmlReader.Close();
+            fileStream.Close();
 
             return memberList;
         }

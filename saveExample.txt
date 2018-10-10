@@ -1,12 +1,19 @@
 using (FileStream writer = new FileStream("c:/temp/file.xml",
   FileMode.Create, FileAccess.Write))
 {
-  DataContractSerializer ser = new DataContractSerializer(typeof(TestClass));
+  DataContractSerializer ser = 
+    new DataContractSerializer(typeof(TestClass));
   ser.WriteObject(writer, testObj);
-}TestClass loadObj;
+}
+TestClass loadObj;
 using (FileStream reader = new FileStream("c:/temp/file.xml",
   FileMode.Open, FileAccess.Read))
 {
-  DataContractSerializer ser = new DataContractSerializer(typeof(TestClass));
+  DataContractSerializer ser = 
+    new DataContractSerializer(typeof(TestClass));
   loadObj = (TestClass)ser.ReadObject(reader);
 }
+
+OK, maybe I can sort of replace what I have with above
+
+https://softwaredevelopmentforecm.wordpress.com/2009/09/17/the-datacontractserializer-xml-files-made-easy/
