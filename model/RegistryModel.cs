@@ -144,7 +144,7 @@ namespace RegistryApp.model
         }
 
         /// <summary>
-        /// Inspired by a method described here:
+        /// Method inspired by a method described here:
         /// https://stackoverflow.com/questions/16943176/how-to-deserialize-xml-using-datacontractserializer
         /// </summary>
         public MemberList GetMemberList()
@@ -174,21 +174,20 @@ namespace RegistryApp.model
             return memberList;
         }
 
-        /// <summary>
-        /// Inspired by a method described here:
-        /// https://www.codeproject.com/Articles/483055/XML-Serialization-and-Deserialization-Part
-        /// </summary>
         private void UpdateXmlFile()
         {
-            string storageDirectory = GetStoragePath();
+            string storagePath = GetStoragePath();
 
-            XmlSerializer serializer = 
-                new XmlSerializer(typeof(MemberList));
+            DataContractSerializer dataHandler =
+                new DataContractSerializer(typeof(MemberList));
 
-            using (TextWriter writer = new StreamWriter(storageDirectory))
+            // Inspired by documentation here:
+            // https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/how-to-serialize-using-datacontractserializer
+            using(FileStream fileStream = 
+                File.Open(storagePath, FileMode.Create))
             {
-                serializer.Serialize(writer, _memberList);
-            }
+                dataHandler.WriteObject(fileStream, _memberList);
+            }            
         }  
     }
 }
