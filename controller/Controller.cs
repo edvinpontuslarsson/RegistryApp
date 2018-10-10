@@ -8,41 +8,22 @@ namespace RegistryApp.controller
 
         private view.RegistryUI _registryUI;
 
-        private view.SuccessMessage _successMessage;
-
         private model.RegistryModel _registryModel;
 
         public Controller(
             view.IndexUI indexUI,
             view.RegistryUI registryUI,
-            view.SuccessMessage successMessage,
             model.RegistryModel registryModel
         )
         {
             _indexUI = indexUI;
             _registryUI = registryUI;
-            _successMessage = successMessage;
             _registryModel = registryModel;
 
             _indexUI.GreetUser();
         }
 
-        public void Interact()
-        {
-            try // have try catch in Program
-            {
-                _indexUI.AskForUserInput(); // tmi
-                string[] userArguments = // this and Process here
-                    _indexUI.GetUserArguments();
-                ProcessUserInput(userArguments);
-            }
-            catch (Exception exception)
-            {
-                _indexUI.HandleException(exception);
-            }
-        }
-
-        private void ProcessUserInput(string[] userArguments)
+        public void ProcessUserInput(string[] userArguments)
         {
             if (_indexUI.UserWantsToListOptions(userArguments)) 
             {
@@ -54,55 +35,31 @@ namespace RegistryApp.controller
             }
             else if (_indexUI.UserWantsToAddBoat(userArguments))
             {
-                int addBoatToMemberID = 
-                    _registryUI.GetMemberID(userArguments);                    
-                _registryUI.AddBoat(addBoatToMemberID);
+                HandleAddBoat(userArguments);
             }
             else if (_indexUI.UserWantsToListMembers(userArguments))
             {
-                _registryUI.ListAllMembers(
-                    _indexUI.UserWantsVerboseList(userArguments)
-                );
+                HandleListAllMembers(userArguments);
             }
             else if (_indexUI.UserWantsToListOneMember(userArguments))
             {
-                int infoMemberId = // GetMemberID()
-                    GetParsedIntOrException(userArguments[2]);
-                _registryUI.ListOneMember(infoMemberId);
+                HanleListOneMember(userArguments);
             }
             else if (_indexUI.UserWantsToEditMember(userArguments))
             {
-                int editMemberID =
-                    GetParsedIntOrException(userArguments[2]);
-                _registryUI.EditMember(editMemberID);
+                HandleEditMember(userArguments);
             }
             else if (_indexUI.UserWantsToEditBoat(userArguments))
             {
-                int ownerOfEditBoatID =
-                    GetParsedIntOrException(userArguments[5]);
-
-                int boatToEditID =
-                    GetParsedIntOrException(userArguments[2]);
-
-                _registryUI.EditBoat(
-                    ownerOfEditBoatID, boatToEditID
-                );
+                HandleEditBoat(userArguments);
             }
             else if (_indexUI.UserWantsToDeleteMember(userArguments))
             {
-                int deleteMemberID =
-                    GetParsedIntOrException(userArguments[2]);
-                _registryUI.DeleteMember(deleteMemberID);
+                HandleDeleteMember(userArguments);
             }
             else if (_indexUI.UserWantsToDeleteBoat(userArguments))
             {
-                int ownerOfDeleteBoatID =
-                    GetParsedIntOrException(userArguments[5]);
-                int deleteBoatID =
-                    GetParsedIntOrException(userArguments[2]);
-                _registryUI.DeleteBoat(
-                    ownerOfDeleteBoatID, deleteBoatID
-                );
+                HandleDeleteBoat(userArguments);
             }
             else
             {
@@ -117,10 +74,68 @@ namespace RegistryApp.controller
                 _registryUI.GetPersonalNumber();
 
             _registryModel.StoreMember(name, personalNumber);
+        }
 
-            _registryUI.DisplaySuccessMessage(
-                _successMessage.MemberAdded
+        private void HandleAddBoat(string[] userArguments)
+        {
+            int memberID = _registryUI.GetMemberID(userArguments);
+            string boatType = _registryUI.GetBoatType();
+            string boatLength = _registryUI.GetBoatLength();
+            
+            _registryModel.AddBoat(memberID, boatType, boatLength);
+        }
+
+        private void HandleListAllMembers(string[] userArguments)
+        {
+            model.MemberList memberList = _registryModel.GetMemberList();
+                
+            _registryUI.ListAllMembers(
+                memberList,
+                _indexUI.UserWantsVerboseList(userArguments)
             );
+        }
+
+        private void HanleListOneMember(string[] userArguments)
+        {
+            int memberID = _registryUI.GetMemberID(userArguments);
+            model.Member member = _registryModel.GetMember(memberID);
+            _registryUI.ListOneMember(member);
+        }
+
+        private void HandleEditMember(string[] userArguments)
+        {
+            int memberID = _registryUI.GetMemberID(userArguments);
+            model.Member memberToEdit = _registryModel.GetMember(memberID);            
+            
+            string newName = _registryUI.GetNewName(memberToEdit);
+            string newPersonalNr = _registryUI.GetNewPersonalNumber(memberToEdit);
+            _registryModel.EditMember(memberToEdit, newName, newPersonalNr);
+        }
+
+        private void HandleEditBoat(string[] userArguments)
+        {
+            int memberID = _registryUI.GetMemberID(userArguments);
+            model.Member boatOwner = _registryModel.GetMember(memberID);
+            
+            int boatID = _registryUI.GetBoatID(userArguments);
+            model.Boat boatToEdit = _registryModel.GetBoat(boatOwner, boatID);
+
+            string newType = _registryUI.GetNewBoatType(boatToEdit);
+            string newLength = _registryUI.GetNewBoatLength(boatToEdit);
+            _registryModel.EditBoat(boatToEdit, newType, newLength);
+        }
+
+        private void HandleDeleteMember(string[] userArguments)
+        {
+            int memberID = _registryUI.GetMemberID(userArguments);
+            _registryModel.DeleteMember(memberID);
+        }
+
+        private void HandleDeleteBoat(string[] userArguments)
+        {
+            int memberID = _registryUI.GetMemberID(userArguments);
+            int boatID = _registryUI.GetBoatID(userArguments);
+            _registryModel.DeleteBoat(memberID, boatID);
         }
     }
 }

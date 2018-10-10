@@ -4,38 +4,11 @@ namespace RegistryApp.view
 {
     public class RegistryUI
     {
-        private model.RegistryModel _registryModel;
-
-        public RegistryUI()
-        {
-            _registryModel = new model.RegistryModel();
-        }
-
-        public void DisplaySuccessMessage(string successMessage)
-        {
-            Console.WriteLine($"\n{successMessage}");
-        }
-
         public int GetMemberID(string[] userArguments) =>
             GetIDOf(userArguments, "member");
         
-
         public int GetBoatID(string[] userArguments) =>
             GetIDOf(userArguments, "boat");
-        
-
-        private int GetIDOf(
-            string[] userArguments, string target
-        )
-        {
-            int targetIndex =
-                Array.IndexOf(userArguments, target);
-            int memberIDIndex = targetIndex + 1;
-            int targetID = GetParsedIntOrException(
-                userArguments[memberIDIndex]
-            );
-            return targetID;
-        }
 
         public string GetName()
         {
@@ -51,50 +24,46 @@ namespace RegistryApp.view
             return personalNumber;
         }
 
-        public void AddBoat(int memberID)
+        public string GetBoatType()
         {
             Console.Write("  Type: ");
             string typeInput = Console.ReadLine().ToLower();
             
-            string type = GetBoatType(typeInput);
-
-            Console.Write("  Length: ");
-            string length = Console.ReadLine();
-
-            _registryModel.AddBoat(memberID, type, length);
-            Console.WriteLine("\nBoat added succesfully!");
+            string boatType = SetBoatType(typeInput);
+            return boatType;
         }
 
-        public void EditMember(int memberID)
+        public string GetBoatLength()
         {
-            model.Member memberToEdit = 
-                _registryModel.GetMember(memberID);
+            Console.Write("  Length: ");
+            string length = Console.ReadLine();
+            return length;
+        }
 
+        public string GetNewName(model.Member memberToEdit)
+        {
             ConsoleGuidingInfo("Leave blank to leave unedited");
             
             Console.Write($"  Name ({memberToEdit.Name}): ");
             string nameInput = Console.ReadLine();
             string newName = nameInput != ""
                 ? nameInput
-                : memberToEdit.Name;
+                : memberToEdit.Name;                
+            return newName;
+        }
 
+        public string GetNewPersonalNumber(model.Member memberToEdit)
+        {
             Console.Write($"  Personal number ({memberToEdit.PersonalNumber}): ");
             string personalNrInput = Console.ReadLine();
             string newPersonalNr = personalNrInput != ""
                 ? personalNrInput
                 : memberToEdit.PersonalNumber;
-
-            _registryModel.EditMember(memberToEdit, newName, newPersonalNr);
-            Console.WriteLine("\n Member edited succesfully!");
+            return newPersonalNr;
         }
 
-        public void EditBoat(int memberID, int boatId)
+        public string GetNewBoatType(model.Boat boatToEdit)
         {
-            model.Member boatOwner = 
-                _registryModel.GetMember(memberID);
-            model.Boat boatToEdit =
-                _registryModel.GetBoat(boatOwner, boatId);
-
             ConsoleGuidingInfo("Leave blank to leave unedited");
 
             Console.Write($"  Type ({boatToEdit.Type}): ");
@@ -102,56 +71,50 @@ namespace RegistryApp.view
             string newTypeInput = typeInput != ""
                 ? typeInput
                 : boatToEdit.Type;
-            string newType = GetBoatType(newTypeInput);
 
+            string newType = SetBoatType(newTypeInput);
+            return newType;
+        }
+
+        public string GetNewBoatLength(model.Boat boatToEdit)
+        {
             Console.Write($"  Length ({boatToEdit.Length}): ");
             string lengthInput = Console.ReadLine();
             string newLength = lengthInput != ""
                 ? lengthInput
                 : boatToEdit.Length;
-            
-            _registryModel.EditBoat(
-                boatToEdit, newType, newLength
-            );
-            Console.WriteLine("\n Boat edited succesfully!");
+            return newLength;
         }
 
-        public void DeleteMember(int memberID)
+        public void ListAllMembers(model.MemberList memberList, bool verbose)
         {
-            _registryModel.DeleteMember(memberID);
-            Console.WriteLine("\n Member deleted succesfully!");
-        }
-
-        public void DeleteBoat(int memberID, int boatId)
-        {
-            _registryModel.DeleteBoat(memberID, boatId);
-            Console.WriteLine("\n Boat deleted succesfully!");
-        }
-
-        public string GetBoatType(string typeInput)
-        {
-            if (typeInput != "sailboat" && typeInput != "motorsailer" &&
-                typeInput != "kayak" && typeInput != "canoe")
+            foreach (model.Member member in memberList.Members)
             {
-                typeInput = "other";
+                string print;
+
+                if (verbose)
+                {
+                    print = GenerateVerbosePrint(member);
+                }
+                else
+                {
+                    print = $"\nMember ID: {member.ID}\n" +
+                    $"Name: {member.Name}\n" +
+                    $"Boat amount: {member.BoatAmount}\n";
+                }
+
+                Console.WriteLine(print);
             }
-
-            return typeInput;
         }
 
-        private void ConsoleGuidingInfo(string info)
-        {
-            Console.BackgroundColor = ConsoleColor.Blue;
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine($"  {info}");
-            Console.ResetColor();
+        public void ListOneMember(model.Member member)
+        {            
+            string print = GenerateVerbosePrint(member);
+            Console.WriteLine(print);
         }
 
-        public void ListOneMember(int memberID)
+        private string GenerateVerbosePrint(model.Member member)
         {
-            model.Member member =
-                _registryModel.GetMember(memberID);
-            
             string print = $"\nMember ID: {member.ID}\n" +
                 $"Name: {member.Name}\n" +
                 $"Personal number: {member.PersonalNumber}\n" +
@@ -163,38 +126,39 @@ namespace RegistryApp.view
                     $"Boat type: {boat.Type}\n" +
                     $"Boat length: {boat.Length}\n";
             }
-
-            Console.WriteLine(print);
+            return print;
         }
 
-        public void ListAllMembers(bool verbose)
+        private int GetIDOf(
+            string[] userArguments, string target
+        )
         {
-            model.MemberList memberList = _registryModel.GetMemberList();
+            int targetIndex =
+                Array.IndexOf(userArguments, target);
+            int memberIDIndex = targetIndex + 1;
+            int targetID = GetParsedIntOrException(
+                userArguments[memberIDIndex]
+            );
+            return targetID;
+        }
 
-            foreach (model.Member member in memberList.Members)
+        private void ConsoleGuidingInfo(string info)
+        {
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine($"  {info}");
+            Console.ResetColor();
+        }
+
+        private string SetBoatType(string typeInput)
+        {
+            if (typeInput != "sailboat" && typeInput != "motorsailer" &&
+                typeInput != "kayak" && typeInput != "canoe")
             {
-                string print = $"\nMember ID: {member.ID}\n" +
-                $"Name: {member.Name}\n";
-
-                if (verbose)
-                {
-                    print += $"Personal number: {member.PersonalNumber}\n" +
-                        $"Boat amount: {member.BoatAmount}\n";
-                    
-                    foreach (model.Boat boat in member.Boats)
-                    {
-                        print += $"\n{member.Name}'s Boat ID: {boat.ID}\n" +
-                            $"Boat type: {boat.Type}\n" +
-                            $"Boat length: {boat.Length}\n";
-                    }
-                }
-                else
-                {
-                    print += $"Boat amount: {member.BoatAmount}\n";
-                }
-
-                Console.WriteLine(print);
+                typeInput = "other";
             }
+
+            return typeInput;
         }
 
         private int GetParsedIntOrException(string input)

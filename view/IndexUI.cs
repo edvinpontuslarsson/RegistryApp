@@ -57,6 +57,11 @@ namespace RegistryApp.view
             Console.Write("\n  How can I be of service?: ");
         }
 
+        public void DisplaySuccessMessage()
+        {
+            Console.WriteLine("\nSuccess!");
+        }
+
         public string[] GetUserArguments()
         {
             string userInput = Console.ReadLine();

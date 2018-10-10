@@ -16,18 +16,29 @@ namespace RegistryApp
         {
             view.IndexUI indexUI = new view.IndexUI();
             view.RegistryUI registryUI = new view.RegistryUI();
-            view.SuccessMessage successMessage = new view.SuccessMessage();
             model.RegistryModel registryModel = new model.RegistryModel();
 
             controller.Controller controller = new controller.Controller(
-                    indexUI, registryUI, successMessage, registryModel
+                    indexUI, registryUI, registryModel
                 );
+
+            indexUI.GreetUser();
 
             bool appRuns = true;
 
             while (appRuns)
             {
-                controller.Interact();
+                try
+                {
+                    indexUI.AskForUserInput();
+                    string[] userArguments = indexUI.GetUserArguments();
+                    controller.ProcessUserInput(userArguments);
+                    indexUI.DisplaySuccessMessage();
+                }
+                catch (Exception exception)
+                {
+                    indexUI.HandleException(exception);
+                }
             }
         }
     }
