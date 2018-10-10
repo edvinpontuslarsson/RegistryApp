@@ -1,0 +1,1 @@
+<MemberList xmlns="http://schemas.datacontract.org/2004/07/RegistryApp.model" xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><Members><Member><ID>1</ID><Name>Donald Duck</Name><PersonalNumber>Quack quack quack?</PersonalNumber><BoatAmount>1</BoatAmount><Boats><Boat><ID>1</ID><Type>sailboat</Type><Length>29 duck feet</Length></Boat></Boats></Member></Members></MemberList>
