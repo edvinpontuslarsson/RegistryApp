@@ -10,11 +10,10 @@ namespace RegistryApp.model
     {
         private MemberList _memberList;
 
-        public void StoreMember(string name, string personalNumber)
+        public void AddMember(string name, string personalNumber)
         {
-            Member member; //= new Member();
-            // member.Name = name;
-            // member.PersonalNumber = personalNumber;
+            Member member;
+            int memberID;
 
             bool registryExists = File.Exists(GetStoragePath());
             
@@ -27,15 +26,15 @@ namespace RegistryApp.model
                 int idOfPreviousMember = 
                     _memberList.Members[indexOfPreviousMember].ID;
 
-                member.ID = idOfPreviousMember + 1;
-
-                // instansiate member here
+                memberID = idOfPreviousMember + 1;
             } 
             else
             {
                 _memberList = new MemberList();
-                member.ID = 1;
+                memberID = 1;
             }
+
+            member = new Member(memberID, name, personalNumber);
 
             _memberList.AddMember(member);
 
@@ -46,7 +45,8 @@ namespace RegistryApp.model
         {
             Member currentMember = GetMember(memberID);
 
-            Boat boat = new Boat();
+            Boat boat;
+            int boatID;
 
             if (currentMember.Boats.Count > 0)
             {
@@ -55,18 +55,16 @@ namespace RegistryApp.model
                 int idOfPreviousBoat =
                     currentMember.Boats[indexOfPreviousBoat].ID;
 
-                boat.ID = idOfPreviousBoat + 1;
+                boatID = idOfPreviousBoat + 1;
             }
             else
             {
-                boat.ID = 1;
+                boatID = 1;
             }
 
-            boat.Type = type;
-            boat.Length =length;
+            boat = new Boat(boatID, type, length);
 
-            // handled in Member
-            currentMember.BoatAmount += 1; 
+            currentMember.AddBoat(boat); 
 
             UpdateXmlFile();
         }
@@ -108,9 +106,7 @@ namespace RegistryApp.model
             Member memberToEdit, string newName, string newPersonalNumber
         )
         {
-            memberToEdit.Name = newName;
-            memberToEdit.PersonalNumber= newPersonalNumber;
-
+            memberToEdit.EditInformation(newName, newPersonalNumber);
             UpdateXmlFile();
         }
 
@@ -118,9 +114,7 @@ namespace RegistryApp.model
             Boat boatToEdit, string newType, string newLength
         )
         {
-            boatToEdit.Type = newType;
-            boatToEdit.Length = newLength;
-
+            boatToEdit.EditInformation(newType, newLength);
             UpdateXmlFile();
         }
 
@@ -136,9 +130,7 @@ namespace RegistryApp.model
             Member boatOwner = GetMember(memberID);
             Boat boatToDelete = GetBoat(boatOwner, boatID);
         
-            boatOwner.Boats.Remove(boatToDelete);
-            boatOwner.BoatAmount -= 1;
-
+            boatOwner.DeleteBoat(boatToDelete);
             UpdateXmlFile();
         }
 

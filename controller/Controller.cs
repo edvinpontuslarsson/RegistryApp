@@ -73,7 +73,7 @@ namespace RegistryApp.controller
             string personalNumber = 
                 _registryUI.GetPersonalNumber();
 
-            _registryModel.StoreMember(name, personalNumber);
+            _registryModel.AddMember(name, personalNumber);
         }
 
         private void HandleAddBoat(string[] userArguments)
