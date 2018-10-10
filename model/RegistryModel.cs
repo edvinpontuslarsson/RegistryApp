@@ -1,24 +1,25 @@
 using System;
-using System.Linq;
-using System.IO;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.Xml;
 
 namespace RegistryApp.model
 {
     public class RegistryModel
     {
+        private StorageModel _storageModel;
         private MemberList _memberList;
+
+        public RegistryModel()
+        {
+            _storageModel = new StorageModel();
+        }
+
+        public MemberList GetMemberList() => _storageModel.GetMemberList();
 
         public void AddMember(string name, string personalNumber)
         {
             Member member;
             int memberID;
-
-            bool registryExists = File.Exists(GetStoragePath());
             
-            if (registryExists)
+            if (_storageModel.RegistryExists())
             {
                 _memberList = GetMemberList();
 
@@ -39,7 +40,7 @@ namespace RegistryApp.model
 
             _memberList.AddMember(member);
 
-            UpdateXmlFile();
+            _storageModel.UpdateXmlFile(_memberList);
         }
 
         public void AddBoat(int memberID, string type, string length)
@@ -67,7 +68,7 @@ namespace RegistryApp.model
 
             currentMember.AddBoat(boat); 
 
-            UpdateXmlFile();
+            _storageModel.UpdateXmlFile(_memberList);
         }
 
         public Member GetMember(int memberID)
@@ -108,7 +109,7 @@ namespace RegistryApp.model
         )
         {
             memberToEdit.EditInformation(newName, newPersonalNumber);
-            UpdateXmlFile();
+            _storageModel.UpdateXmlFile(_memberList);
         }
 
         public void EditBoat(
@@ -116,14 +117,14 @@ namespace RegistryApp.model
         )
         {
             boatToEdit.EditInformation(newType, newLength);
-            UpdateXmlFile();
+            _storageModel.UpdateXmlFile(_memberList);
         }
 
         public void DeleteMember(int memberID)
         {
             Member memberToDelete = GetMember(memberID);
             _memberList.Members.Remove(memberToDelete);
-            UpdateXmlFile();
+            _storageModel.UpdateXmlFile(_memberList);
         }
 
         public void DeleteBoat(int memberID, int boatID)
@@ -132,62 +133,7 @@ namespace RegistryApp.model
             Boat boatToDelete = GetBoat(boatOwner, boatID);
         
             boatOwner.DeleteBoat(boatToDelete);
-            UpdateXmlFile();
+            _storageModel.UpdateXmlFile(_memberList);
         }
-
-        private string GetStoragePath()
-        {
-            string projectDir = Directory.GetCurrentDirectory();
-            string storagePath = 
-                $"{projectDir}/storage/Registry.xml";
-            return storagePath;
-        }
-
-        /// <summary>
-        /// Method inspired by a method described here:
-        /// https://stackoverflow.com/questions/16943176/how-to-deserialize-xml-using-datacontractserializer
-        /// </summary>
-        public MemberList GetMemberList()
-        {
-            string storagePath = GetStoragePath();
-            bool registryExists = File.Exists(storagePath);
-            if (!registryExists) {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            DataContractSerializer dataHandler =
-                new DataContractSerializer(typeof(MemberList));
-
-            FileStream fileStream = 
-                new FileStream(storagePath, FileMode.Open);
-
-            XmlDictionaryReader xmlReader =
-                XmlDictionaryReader.CreateTextReader(
-                    fileStream, new XmlDictionaryReaderQuotas()
-                );
-
-            MemberList memberList = 
-                (MemberList)dataHandler.ReadObject(xmlReader);
-            xmlReader.Close();
-            fileStream.Close();
-
-            return memberList;
-        }
-
-        private void UpdateXmlFile()
-        {
-            string storagePath = GetStoragePath();
-
-            DataContractSerializer dataHandler =
-                new DataContractSerializer(typeof(MemberList));
-
-            // Inspired by documentation here:
-            // https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/how-to-serialize-using-datacontractserializer
-            using(FileStream fileStream = 
-                File.Open(storagePath, FileMode.Create))
-            {
-                dataHandler.WriteObject(fileStream, _memberList);
-            }            
-        }  
     }
 }

@@ -17,22 +17,6 @@ namespace RegistryApp.view
             InstructUser();
         }
 
-        public void HandleException(Exception exception)
-        {
-            if (exception is FormatException)
-            {
-                InstructUser(true);
-            }
-            else if (exception is ArgumentOutOfRangeException)
-            {
-                Console.WriteLine("\nRequested resource does not exist \n");
-            }
-            else
-            {
-                Console.WriteLine(exception);
-            }
-        }
-
         public void InstructUser(bool error = false) 
         {
             if (error) {
@@ -71,6 +55,22 @@ namespace RegistryApp.view
                 lowUserInput.Split(" ");
             
             return userArguments;
+        }
+
+        public void HandleException(Exception exception)
+        {
+            if (exception is FormatException)
+            {
+                InstructUser(true);
+            }
+            else if (exception is ArgumentOutOfRangeException)
+            {
+                Console.WriteLine("\nRequested resource does not exist \n");
+            }
+            else
+            {
+                Console.WriteLine(exception);
+            }
         }
 
         public void ListOptions()
