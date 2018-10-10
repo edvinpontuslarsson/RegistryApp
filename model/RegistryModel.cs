@@ -12,9 +12,9 @@ namespace RegistryApp.model
 
         public void StoreMember(string name, string personalNumber)
         {
-            Member member = new Member();
-            member.Name = name;
-            member.PersonalNumber = personalNumber;
+            Member member; //= new Member();
+            // member.Name = name;
+            // member.PersonalNumber = personalNumber;
 
             bool registryExists = File.Exists(GetStoragePath());
             
@@ -28,6 +28,8 @@ namespace RegistryApp.model
                     _memberList.Members[indexOfPreviousMember].ID;
 
                 member.ID = idOfPreviousMember + 1;
+
+                // instansiate member here
             } 
             else
             {
@@ -35,7 +37,7 @@ namespace RegistryApp.model
                 member.ID = 1;
             }
 
-            _memberList.Members.Add(member);
+            _memberList.AddMember(member);
 
             UpdateXmlFile();
         }
@@ -63,30 +65,10 @@ namespace RegistryApp.model
             boat.Type = type;
             boat.Length =length;
 
-            currentMember.Boats.Add(boat);
+            // handled in Member
             currentMember.BoatAmount += 1; 
 
             UpdateXmlFile();
-        }
-
-        /// <summary>
-        /// Inspired by a method described here:
-        /// https://www.codeproject.com/Articles/487571/XML-Serialization-and-Deserialization-Part-2
-        /// </summary>
-        public MemberList GetMemberList()
-        {
-            bool registryExists = File.Exists(GetStoragePath());
-            if (!registryExists) {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            XmlSerializer xmlDeserializer = new XmlSerializer(typeof(MemberList));
-            TextReader reader = new StreamReader(GetStoragePath());
-
-            object deserializer = xmlDeserializer.Deserialize(reader);
-            MemberList memberList = (MemberList)deserializer;
-
-            return memberList;
         }
 
         public Member GetMember(int memberID)
@@ -166,6 +148,26 @@ namespace RegistryApp.model
             string storagePath = 
                 $"{projectDir}/storage/Registry.xml";
             return storagePath;
+        }
+
+        /// <summary>
+        /// Inspired by a method described here:
+        /// https://www.codeproject.com/Articles/487571/XML-Serialization-and-Deserialization-Part-2
+        /// </summary>
+        public MemberList GetMemberList()
+        {
+            bool registryExists = File.Exists(GetStoragePath());
+            if (!registryExists) {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            XmlSerializer xmlDeserializer = new XmlSerializer(typeof(MemberList));
+            TextReader reader = new StreamReader(GetStoragePath());
+
+            object deserializer = xmlDeserializer.Deserialize(reader);
+            MemberList memberList = (MemberList)deserializer;
+
+            return memberList;
         }
 
         /// <summary>
