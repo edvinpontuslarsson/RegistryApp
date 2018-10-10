@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace RegistryApp.model
 {
+    [DataContract] // for XML-conversion
     public class Member
     {
         private int _id;
@@ -11,30 +13,36 @@ namespace RegistryApp.model
         private int _boatAmount;
         private List<Boat> _boats;
 
+        // for XML-conversion
+        [DataMember(Order = 1)]
         public int ID 
         {
             get => _id;  
             private set { _id = value; }
         }
 
+        [DataMember(Order = 2)]
         public string Name 
         {
             get => _name;  
             private set { _name = value; }
         }
 
+        [DataMember(Order = 3)]
         public string PersonalNumber
         {
             get => _personalNumber;  
             private set { _personalNumber = value; }
         }
 
+        [DataMember(Order = 4)]
         public int BoatAmount
         {
             get => _boatAmount;  
             private set { _boatAmount = value; }
         }
 
+        [DataMember(Order = 5)]
         public List<Boat> Boats
         {
             get => _boats;  

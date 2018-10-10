@@ -1,0 +1,12 @@
+using (FileStream writer = new FileStream("c:/temp/file.xml",
+  FileMode.Create, FileAccess.Write))
+{
+  DataContractSerializer ser = new DataContractSerializer(typeof(TestClass));
+  ser.WriteObject(writer, testObj);
+}TestClass loadObj;
+using (FileStream reader = new FileStream("c:/temp/file.xml",
+  FileMode.Open, FileAccess.Read))
+{
+  DataContractSerializer ser = new DataContractSerializer(typeof(TestClass));
+  loadObj = (TestClass)ser.ReadObject(reader);
+}
