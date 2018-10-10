@@ -46,8 +46,6 @@ namespace RegistryApp.model
         public void AddBoat(int memberID, string type, string length)
         {
             Member currentMember = GetMember(memberID);
-
-            Boat boat;
             int boatID;
 
             if (currentMember.Boats.Count > 0)
@@ -64,8 +62,7 @@ namespace RegistryApp.model
                 boatID = 1;
             }
 
-            boat = new Boat(boatID, type, length);
-
+            Boat boat = new Boat(boatID, type, length);
             currentMember.AddBoat(boat); 
 
             _storageModel.UpdateXmlFile(_memberList);
@@ -75,33 +72,20 @@ namespace RegistryApp.model
         {
             _memberList = GetMemberList();
 
-            int memberIndex = 0;
+            Member relevantMember = 
+                _memberList.Members.Find(
+                    member => member.ID == memberID
+                );
 
-            bool memberExists =
-                _memberList.Members
-                .Exists(member => member.ID == memberID);
-
-            if (!memberExists)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            return _memberList.Members[memberIndex];
+            return relevantMember;
         }
 
         public Boat GetBoat(Member boatOwner, int boatID)
         {
-            int boatIndex = 0;
-
-            bool boatExists = 
-                boatOwner.Boats.Exists(boat => boat.ID == boatID);
-
-            if (!boatExists)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            return boatOwner.Boats[boatIndex];
+            Boat relevantBoat = boatOwner.Boats.Find(
+                boat => boat.ID == boatID
+            );
+            return relevantBoat;
         }
 
         public void EditMember(
