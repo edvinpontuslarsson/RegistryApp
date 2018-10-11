@@ -106,7 +106,7 @@ namespace RegistryApp.model
         public void DeleteMember(int memberID)
         {
             Member memberToDelete = GetMember(memberID);
-            _memberList.Members.Remove(memberToDelete);
+            _memberList.DeleteMember(memberToDelete);
             _storageModel.UpdateXmlFile(_memberList);
         }
 

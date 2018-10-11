@@ -25,5 +25,10 @@ namespace RegistryApp.model
         {
             Members.Add(member);
         }
+
+        public void DeleteMember(Member member)
+        {
+            Members.Remove(member);
+        }
     }
 }
