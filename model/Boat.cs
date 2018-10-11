@@ -22,7 +22,19 @@ namespace RegistryApp.model
         public string Type
         {
             get => _type;  
-            private set { _type = value; }
+
+            private set 
+            {
+                if (value != "sailboat" && value != "motorsailer" &&
+                value != "kayak" && value != "canoe")
+                {
+                    _type = "other";
+                }
+                else
+                {
+                    _type = value;
+                }
+            }
         }
 
         [DataMember(Order = 3)]

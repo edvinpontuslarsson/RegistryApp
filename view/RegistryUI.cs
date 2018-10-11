@@ -27,9 +27,7 @@ namespace RegistryApp.view
         public string GetBoatType()
         {
             Console.Write("  Type: ");
-            string typeInput = Console.ReadLine().ToLower();
-            
-            string boatType = SetBoatType(typeInput);
+            string boatType = Console.ReadLine().ToLower();
             return boatType;
         }
 
@@ -68,11 +66,10 @@ namespace RegistryApp.view
 
             Console.Write($"  Type ({boatToEdit.Type}): ");
             string typeInput = Console.ReadLine();
-            string newTypeInput = typeInput != ""
+            string newType = typeInput != ""
                 ? typeInput
                 : boatToEdit.Type;
 
-            string newType = SetBoatType(newTypeInput);
             return newType;
         }
 
@@ -148,17 +145,6 @@ namespace RegistryApp.view
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine($"  {info}");
             Console.ResetColor();
-        }
-
-        private string SetBoatType(string typeInput)
-        {
-            if (typeInput != "sailboat" && typeInput != "motorsailer" &&
-                typeInput != "kayak" && typeInput != "canoe")
-            {
-                typeInput = "other";
-            }
-
-            return typeInput;
         }
 
         private int GetParsedIntOrException(string input)

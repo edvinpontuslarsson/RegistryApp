@@ -71,7 +71,6 @@ namespace RegistryApp.model
         public Member GetMember(int memberID)
         {
             _memberList = GetMemberList();
-
             Member relevantMember = 
                 _memberList.Members.Find(
                     member => member.ID == memberID
