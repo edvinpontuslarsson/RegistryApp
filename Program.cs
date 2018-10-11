@@ -2,9 +2,6 @@
 
 namespace RegistryApp
 {
-    /// <summary>
-    /// Starting point of the application
-    /// </summary>
     class Program
     {
         static void Main()
