@@ -107,7 +107,15 @@ namespace RegistryApp.model
         {
             Member memberToDelete = GetMember(memberID);
             _memberList.DeleteMember(memberToDelete);
-            _storageModel.UpdateXmlFile(_memberList);
+
+            if (_memberList.Members.Count == 0)
+            {
+                _storageModel.DeleteXmlFile();
+            }
+            else
+            {
+                _storageModel.UpdateXmlFile(_memberList);
+            }
         }
 
         public void DeleteBoat(int memberID, int boatID)

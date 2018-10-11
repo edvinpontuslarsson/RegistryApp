@@ -25,6 +25,11 @@ namespace RegistryApp.model
             }          
         }
 
+        public void DeleteXmlFile()
+        {
+            File.Delete(GetStoragePath());
+        }
+
         /// <summary>
         /// Method inspired by a method described here:
         /// https://stackoverflow.com/questions/16943176/how-to-deserialize-xml-using-datacontractserializer
