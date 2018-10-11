@@ -20,13 +20,13 @@ namespace RegistryApp
                 );
 
             indexUI.GreetUser();
-
             bool appRuns = true;
 
             while (appRuns)
             {
                 try
                 {
+                    indexUI.InstructUser();
                     indexUI.AskForUserInput();
                     string[] userArguments = indexUI.GetUserArguments();
                     controller.ProcessUserInput(userArguments);

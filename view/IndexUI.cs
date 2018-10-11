@@ -14,7 +14,6 @@ namespace RegistryApp.view
         public void GreetUser() 
         {
             Console.WriteLine("Welcome!");
-            InstructUser();
         }
 
         public void InstructUser(bool error = false) 

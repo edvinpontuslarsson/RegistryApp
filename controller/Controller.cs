@@ -19,8 +19,6 @@ namespace RegistryApp.controller
             _indexUI = indexUI;
             _registryUI = registryUI;
             _registryModel = registryModel;
-
-            _indexUI.GreetUser();
         }
 
         public void ProcessUserInput(string[] userArguments)
