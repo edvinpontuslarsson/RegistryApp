@@ -64,7 +64,7 @@ namespace RegistryApp.model
         {
             string projectDir = Directory.GetCurrentDirectory();
             string storagePath = 
-                $"{projectDir}/storage/Registry.xml";
+                $"{projectDir}/Registry.xml";
             return storagePath;
         }  
     }
