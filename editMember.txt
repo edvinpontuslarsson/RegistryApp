@@ -1,0 +1,12 @@
+title Edit Member Information Sequence
+
+"_controller.Controller"->"_indexUI:IndexUI": bool = UserWantsToEditMember(string[] userArguments)
+"_controller.Controller"->"_registryUI:RegistryUI": int memberID = GetMemberID(string[] userArguments)
+"_controller.Controller"->"_registryModel:RegistryModel":GetMember(int memberID)
+"_registryModel:RegistryModel"->"_storageModel": MemberList _memberList = GetMemberList()
+"_registryModel:RegistryModel"-->"_controller.Controller": Member relevantMember
+"_controller.Controller"->"_registryUI:RegistryUI": string newName = GetNewName(Member memberToEdit)
+"_controller.Controller"->"_registryUI:RegistryUI": string newPersonalNr = GetNewPersonalNumber(Member memberToEdit)
+"_controller.Controller"->"_registryModel:RegistryModel": EditMember(Member memberToEdit, string newName, string newPersonalNumber)
+"_registryModel:RegistryModel"->"_member:Member": EditInformation(string newName, string newPersonalNumber) 
+"_registryModel:RegistryModel"->"_storageModel": UpdateXmlFile(MemberList memberList)
