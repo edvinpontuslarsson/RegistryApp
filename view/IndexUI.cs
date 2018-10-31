@@ -4,13 +4,6 @@ namespace RegistryApp.view
 {
     public class IndexUI
     {
-        private RegistryUI _registryUI;
-
-        public IndexUI()
-        {
-            _registryUI = new RegistryUI();
-        }
-
         public void GreetUser() 
         {
             Console.WriteLine("Welcome!");
