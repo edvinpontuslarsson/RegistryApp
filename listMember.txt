@@ -1,0 +1,9 @@
+title List Member Information Sequence
+
+"_controller.Controller"->"_indexUI:IndexUI": bool = UserWantsToListOneMember(string[] userArguments)
+"_controller.Controller"->"_registryUI:RegistryUI": int memberID = GetMemberID(string[] userArguments)
+"_controller.Controller"->"_registryModel:RegistryModel": Member member = GetMember(int memberID)
+"_registryModel:RegistryModel"->"_storageModel:StorageModel": MemberList _memberList = GetMemberList()
+"_registryModel:RegistryModel"-->"_controller.Controller": Member relevantMember
+"_controller.Controller"->"_registryUI:RegistryUI": ListOneMember(Member member)
+"_registryUI:RegistryUI"->"Console": WriteLine(string print)
